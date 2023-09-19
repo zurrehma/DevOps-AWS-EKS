@@ -1,0 +1,440 @@
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ava-configmap
+  namespace: ava-server
+data:
+  redisson-jcache.yml: |
+    singleServerConfig:
+      idleConnectionTimeout: 10000
+      connectTimeout: 10000
+      timeout: 3000
+      retryAttempts: 3
+      retryInterval: 1500
+      password: null
+      subscriptionsPerConnection: 5
+      clientName: null
+      address: redis://redis-service.ava-server.svc.cluster.local:6379
+      subscriptionConnectionMinimumIdleSize: 1
+      subscriptionConnectionPoolSize: 50
+      connectionMinimumIdleSize: 10
+      connectionPoolSize: 64
+      database: 0
+      dnsMonitoringInterval: 5000
+    threads: 0
+    nettyThreads: 0
+    codec: !<org.redisson.codec.FstCodec> {}
+
+
+  project.properties: |
+    #########################################################################################
+    #                                                                                       #
+    #                             Project Configuration File                                #
+    #                                                                                       #
+    #########################################################################################
+
+    # Some comment
+    some_parameter                                       = some_setting
+
+    #########################################################################################
+    #                                                                                       #
+    #                        Parameters that depend on Environment                          #
+    #                                                                                       #
+    #########################################################################################
+
+    deployment_environment                               = dev
+    database_hostname                                    = dev-rds.eatwithava.com
+    database_name                                        = dev
+    database_username                                    = ava_server
+    database_password                                    = E9WE_tRg4_5E
+    database_port                                        = 5432
+
+    jdbc_ssl_flag_pom                                    =
+    jdbc_ssl_flag                                        =
+
+    replica_database_hostname                            = dev-rds.eatwithava.com
+    replica_database_port                                = 5432
+    replica_database_name                                = dev
+    read_only_flag                                       = ?readOnly=true
+
+    jooq_jdbc_url                                        = jdbc:postgresql://localhost:5432/ava_development
+
+    activemq_server_url                                  = nio://activemq-service.ava-server.svc.cluster.local:61616
+    activemq_username                                    =
+    activemq_password                                    =
+
+    eatwithava_app_base_url                              = http://localhost:3000
+    eatwithava_nutria_app_base_url                       = http://localhost:3000
+    eatwithava_optifast_app_base_url                     = http://localhost:3000
+    eatwithava_dvelop_app_base_url                       = https://app-staging.dvelopimmunity.com
+    phenology_app_base_url                               = https://phenology-website-git-develop-hologram-sciences.vercel.app
+    phenology_account_base_url                           = https://phenology-website-git-develop-hologram-sciences.vercel.app
+    supergreens_base_url                                 = https://supergreens-healthy-aging.web.app
+    recipes_base_url                                     = https://s3.amazonaws.com/ava-recipes/synced-development/
+    recipes_nutria_base_url                              = https://s3.amazonaws.com/nutria-recipes/synced-development/
+    recipes_optijourney_base_url                         = https://s3.amazonaws.com/optijourney-recipes/synced-development/
+    ai_hologram_base_url                                 = https://ai-staging.hologramsciences.com/
+    ai_hologram_enabled                                = true
+
+    git_commit_hash                                      = 456f5bea478aa02424c58443e5e5d4cd31da005b
+
+    num_vetting_votes_required                           = 3
+    #
+    # Twilio: This information can be found at twilio.com/user/account
+    #
+    twilio_account_sid                                   = ACad1046aa7a82841d306cf6fefad21b30
+    twilio_auth_token                                    = d96456b784fb5886e8f995614875e872
+    twilio_status_callback                               =
+
+    #
+    # Stripe configuration
+    #
+    stripe_api_key                                       = sk_test_vH6KaVEjtIvHWffd1cf87DPp
+
+    ten_and_two_enabled                                  = false
+
+    google_gogo_ios_client_id			     = 151547165957-0ecvi59eq7te7laabfj8pdma0p5v01gv.apps.googleusercontent.com
+
+    redis_hostname                                       = redis://redis-service.ava-server.svc.cluster.local:6379
+
+    #########################################################################################
+    #                                                                                       #
+    #                    Parameters that DO NOT depend on Environment                       #
+    #                                                                                       #
+    #########################################################################################
+
+    # If we change the API calls in a way that is not backwards compatible, we have to increment this number
+    access_control_allow_origin                          = https://app.hologramsciences.com,https://app-staging.hologramsciences.com,https://recipes.eatwithava.com,https://nutria-recipes.eatwithava.com,https://optijourney-recipes.eatwithava.com,https://compass-staging.eatwithava.com,https://optijourney-app-staging.eatwithava.com,https://optijourney-app.eatwithava.com,https://nutria-app-staging.eatwithava.com,https://nutria-app.eatwithava.com,https://marketplace-staging.eatwithava.com,https://marketplace.eatwithava.com,https://app.eatwithava.com,https://app-staging.eatwithava.com,http://localhost:3000,http://0.0.0.0:3000,http://0.0.0.0:3000/,https://app-staging.dvelopimmunity.com,https://app.dvelopimmunity.com,https://phenology-website-git-develop-hologram-sciences.vercel.app,https://staging.myphenology.com,https://www.myphenology.com,https://myphenology.com,https://momentous-staging.hologramsciences.com,https://momentous.hologramsciences.com,https://phenology-staging.myshopify.com,https://dvelopimmunity.com,https://supergreens-healthy-aging.web.app, https://centrum-supergreens.myshopify.com
+    access_control_allow_headers                         = Content-Type,X-Requested-With,Accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization,WebSocket-Conversation-Session-Type,WebSocket-Session-ID
+    access_control_allow_methods                         = GET,POST,HEAD,OPTIONS,PUT,DELETE
+    access_control_request_headers                       = *
+
+    ava_privacy_policy_url                               = https://www.eatwithava.com/privacy-policy
+    ava_terms_of_service_url                             = https://www.eatwithava.com/termsofservice
+    ava_bac_disclaimer_url                               = https://www.eatwithava.com/bac_disclaimer
+    ava_logo_url                                         = https://s3.amazonaws.com/ava-pictures/ava.png
+    nutria_logo_url                                      = https://s3.amazonaws.com/ava-pictures/nutria.png
+    optijourney_logo_url                                 = https://s3.amazonaws.com/optijourney-recipes/synced/optijourney.png
+    culturelle_logo_url                                  = https://s3.amazonaws.com/ava-pictures/culturelle.png
+    ava_message_frequency                                = Msg freq varies
+
+    ava_waitlist_registration_url                        = https://www.eatwithava.com
+
+    authorization_expiration_time_in_hours               = 24
+    refresh_token_expiration_time_in_days                = 60
+
+    account_activation_token_expiration_time_in_hours        = 24
+    forgot_password_token_expiration_time_in_hours           = 6
+    phenology_forgot_password_token_expiration_time_in_hours = 4
+    supergreens_forgot_password_token_expiration_time_in_hours = 4
+    token_login_expiration_time_in_hours                     = 3
+    email_verification_token_expiration_time_in_hours        = 96
+    email_verification_token_expiration_time_in_minutes      = 15
+    login_token_expiration_time_in_minutes                   = 15
+
+    message_check_delay_in_minutes                       = 3
+
+    reply_threshold_in_minutes                           = 15
+
+    web_socket_user_expiration_in_minutes                = 10
+
+    app_path_single_journal_public                       = my-journal/
+    app_path_groups_public                               = my-groups/
+    app_path_recommendations_public                      = recommendations/
+    paywall_url                                          = https://eatwithava.com/test-stripe?
+
+    presigned_upload_ttl_in_hours                        = 6
+
+    #comma separated list of phone numbers that are disabled for viewing photo card history
+    numbers_disabled_for_photo_history                   = +16173026246, +17346069525, +17169411853, +19046281212, +16463208232
+
+    #
+    # AWS SES Configuration:
+    #
+
+    # This address must be verified
+    from_email_address                                   = Ava Customer Service <no-reply@eatwithava.com>
+    distribution_list_email_address                      = dev+phenprogramdata@hologramsciences.com
+
+
+    # This is the address to receive notifications about bounces and complaints
+    email_return_path                                    = aws-ses-notifications+{0}@eatwithava.com
+
+
+    #
+    # ActiveMQ:
+    #
+    caleasy_coach_close_timeout_in_seconds               = 600
+    caleasy_coach_accept_timeout_in_seconds              = 15
+    ack_timeout_in_seconds                               = 5
+
+    #
+    # Conversation
+    #
+
+    conversation_coach_close_safety_margin_in_seconds     = 5
+    conversation_coach_accept_timeout_in_seconds          = 15
+    conversation_coach_close_timeout_in_seconds           = 600
+
+    subscribe_new_customers_to_program                    = false
+    default_program_trial_days                            = 365
+
+    subscribe_new_customers_to_caleasy_only               = false
+    caleasy_only_trial_days                               = 100
+
+    customer_welcome_bonus_points                         = 1000
+    customer_welcome_bonus_description                    = Welcome Bonus
+
+    customer_meal_selection_points                        = 100
+    customer_meal_selection_description                   = Selected Best Meal Recommendation
+
+    customer_sharing_points                               = 100
+    customer_sharing_description                          = Sharing Reward
+
+    customer_instacart_purchase_points                    = 100
+    customer_instacart_purchase_description               = Instacart Purchase Reward
+
+    first_restaurant_recommendation_chosen_points         = 500
+    first_restaurant_recommendation_chosen_description    = First Menu Recommendation Chosen
+
+    challenge_completed_description                       = Challenge Completed
+
+    first_recipe_recommendation_chosen_points             = 500
+    first_recipe_recommendation_chosen_description        = First Recipe Recommendation Chosen
+
+    first_mobile_app_photo_upload_points                  = 500
+    first_mobile_app_photo_upload_description             = First Mobile App Photo Upload
+
+    customer_referrer_points                              = 2000
+    customer_referree_points                              = 2000
+
+    first_meal_log_description                            = First Meal Log
+    first_meal_log_points                                 = 500
+
+    first_wellness_log_description                        = First Wellness Log
+    first_wellness_log_points                             = 500
+
+    first_time_wellness_score_greater_than_50_description = First Wellness Score >50
+    first_time_wellness_score_greater_than_50_points      = 500
+
+    first_time_messaging_coach_description                = First Coach Interaction
+    first_time_messaging_coach_points                     = 500
+
+    seven_days_checklist_completed_description            = Checklist Completed
+    seven_days_checklist_completed_points                 = 500
+
+    seven_days_wellness_score_greater_than_80_description = Wellness Score >80
+    seven_days_wellness_score_greater_than_80_points      = 1000
+
+    meal_logging_streak_of_3+_meals_for_5days_description = Meal Logging Streak
+    meal_logging_streak_of_3+_meals_for_5days_points      = 1000
+
+
+    default_program_id                                    = 1
+    caleasy_only_program_id                               = 2
+
+    klaviyo_public_api_key                                = YynBLJ
+
+    slack_api_token                                       = xoxb-31821511333-1014129002804-xMzgITxCgpTjYDMCLQNpJYoM
+    customer_tracking_slack_channel_name		          = customer-tracking
+    slack_signing_secret                                  = 877c60200f429302bc06814a89a18111
+    email_notification_slack_channel_name                 = subscription-upgrade-requests
+
+    default_weekly_summary_content                      = Making changes to nutrition, sleep, hydration, activity and mindfulness habits can be hard work! As you continue to work on these areas of wellness, we will guide you along with meal planning, tips, and education to help make your journey to better health less complicated and more sustainable for the long run.
+    default_wellness_content                            = Focus on Wellness\nAdd at least one serving of nutrient dense foods to your meals and snacks per day. Examples could be whole-grains (quinoa, barley, whole wheat bread), omega-3s (flaxseed, salmon), or fruits and veggies (dark leafy greens, or berries).\n\nHYDRATION|Focus on Hydration\nHYDRATION|Schedule water breaks throughout the day that correspond with other breaks you are taking. Grab a glass of water each time to connect this habit with another usual activity.\n\nNUTRITION|Focus on Nutrient Boosters\nNUTRITION|Add frozen or pre-chopped fruits and veggies to your grocery list. It's easier to add these to your daily routine if they are already prepared.\n\nACTIVITY|Focus on Moving More\nACTIVITY|Take a short walk after evening meal time. Whether around your home, or outside, even 10 minutes gets you moving while also helping to improve digestion, blood flow and circulation.\n\nIMMUNITY|Focus on Your Nutrient Needs\nIMMUNITY|Select the “boost immune health” meal plan to see where your nutrient gaps are and let us fill them in. Choose to make colorful fruits and vegetables a part of each meal and snack. Ideas might include adding strawberries to a salad, or creating a fruit smoothie blended with spinach. \n\nSLEEP|Focus on Sleep Habits\nSLEEP|Set reminders 1 hour prior to bedtime in order to start winding down. By hitting your sleep goals you are more likely to have improved energy levels, mood, and sharp mental strength throughout the day!\n\nMINDFULNESS|Focus on Mindfulness\nMINDFULNESS|Staying in tune with mood can increase the long term success of achieving your health and wellness goals. Give yourself a daily mood and emotion check in and log it in the app.
+
+    #
+    # DynamoDB Settings:
+    #
+    dynamo_db_user_profiles_table_name                   = Dieting-User-Profiles
+    dynamo_db_user_profiles_table_primary_key            = phoneNumber
+
+
+    #
+    # Google Script
+    #
+    google_script_id                                     = MkrAPwKEbyJnXKY-w2TELHZWlnWsxLaT-
+    google_maps_api_key                                  = AIzaSyD68kFuanFciYJdR9LQoCRGpxNDtFwkYpk
+
+    #
+    # Elasticsearch Settings:
+    #
+    elasticsearch_cluster_name                           = j30-dieting
+    elasticsearch_index                                  = j30-dieting
+
+    #
+    # Facebook Settings
+    #
+    facebook_post_url                                    = graph.facebook.com
+    facebook_post_path                                   = /v2.6/me/messages
+    facebook_user_path_prefix                            = /v2.6/
+    facebook_verify_token                                = ThXHrTqICmPVMcLuh7bD7hRAjzivzy8iJlUv6SKAsJ7plqxIov3iJErYdkEfWUhpAE90JLfgYNv1wB7s
+    facebook_page_access_token                           = EAAaoHcBtnicBAIsbUcS6SNeA4s4h8v7bsEUtpWSS8XZAlqZBw8NchwFlJLF7oDnBbohZC5JodPbcJwWavRZAORiXPlgUx8xw4nqExO8Tgi9nyDe6GXsdOdCYTDBswqIzk7D34uc0OJixtdlPVeuy4qTYLcam21ZAhpYO8nxDvDgZDZD
+
+    facebook_gogo_app_id				     = 787356951437482
+    facebook_gogo_app_secret			     = d22959448965faaea502dabfe64a1750
+
+    #
+    #  DeepDetect service
+    #
+    deep_detect_url                                      = https://deep-detect.eatwithava.com/predict
+    deep_detect_username                                 = deep-detect-user
+    deep_detect_password                                 = e9uj8hqKWLLmuxkO7XgAltbL3fqFICMiKwaej6cS
+    deep_detect_post_data                                = '{'"service":"imgsimilar","parameters":'{'"input":'{'"width":224,"height":224'}',"mllib":'{'"gpu":false,"extract_layer":"loss3/classifier"'}',"output":'{'"binarized":false'}}',"data":["{0}"]'}'
+
+    process_reduced_features                             = false
+
+    #
+    # Loggly configuration
+    #
+    loggly_token                                         = 22ea15bc-09b2-4a22-ac9a-bbade4ef0ff2
+    loggly_base_url                                      = https://logs-01.loggly.com/inputs/
+
+    #
+    # APNS Configuration:
+    #
+    hologram_apns_team_id                                         = C48ZT65F34
+    hologram_apns_key_id                                          = H4SYU2BH4P
+    hologram_apns_key                                             = MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgddjpHwjk7PhkstWfNWfYTGbM0dpqmKRVMBTrWGAOhvKgCgYIKoZIzj0DAQehRANCAAQNaD5+YVKT2vHShgv5nBcLfXLD1vPwCWuBli8HEQ+N8+1tS9iccEOvTcJJcpQAGNdJ1UlVuLHXsZ7E3LNy8OqK
+
+    pocket_coach_apns_team_id                                     = 236T6PNUCZ
+    pocket_coach_apns_key_id                                      = 5NP5X83X6Z
+    pocket_coach_apns_key                                         = MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQg1mUaCsBPDRaeNzFuUa2sH7lfi9J5tKE5Vhwj5GnB+BGgCgYIKoZIzj0DAQehRANCAATQqqk80yfYpCBqLoz1emhHobluCqgvvOZvdd7GtxYfgwajH5oM+AqJO7YGVjCQS/daxCIR+IOk1DIKv2unoG+K
+
+    momentous_apns_team_id                                        = HW39Z789R9
+    momentous_apns_key_id                                         = K99M5S4YFZ
+    momentous_apns_key                                            =
+
+    apn_production_gateway_bundle_ids                    = com.eatwithava.ava.staging, com.hologramsciences.dvelop.staging, com.hologramsciences.phenology.staging, com.momentous.mobile.staging
+    apn_sandbox_gateway_bundle_ids                       = com.hologramsciences.dvelop.dev, com.eatwithava.ava.dev, com.hologramsciences.phenology.dev
+    apn_premium_bundle_ids                               = com.eatwithava.ava.staging, com.eatwithava.ava.dev, com.hologramsciences.dvelop.dev, com.hologramsciences.dvelop.staging, com.hologramsciences.phenology.dev, com.hologramsciences.phenology.staging, com.momentous.mobile.staging
+    ai_eatwithava_authorization_token                    = uOKbYdM9RmcmyR1aXiXGxE8Cgi82pdKD
+
+    message_suggestion_timeout_seconds                   = 10
+
+    #
+    # Postmark Configuration:
+    #
+    postmark_api_host                                    = api.postmarkapp.com
+    postmark_api_token                                   = 76f853c9-2922-4ffb-a67e-2d1b852be4a4
+
+    #
+    # App Download
+    #
+
+    app_download_url                                     = https://itunes.apple.com/us/app/ava-personalized-nutrition-coach/id1223611283?ls=1&mt=8
+
+    ava_ios_appstore_link                                = http://apple.co/2q4QJIx
+    ava_android_appstore_link                            = http://bit.ly/2stKyQ6
+    nutria_ios_appstore_link                             = https://itunes.apple.com/us/app/nutria/id1375391367
+
+    welcome_survey_url                                   = https://docs.google.com/a/eatwithava.com/forms/d/e/1FAIpQLSfYfwW8jsGryMO98y2ExZKzWFeKLLb_HP_pAWaPm4n4azIZrQ/viewform
+
+    # TODO: Set this URL after registering Gogo with iTumes Connect
+    gogo_app_download_url                                = https://itunes.apple.com/us/app/gogo-ava/id1289546038?ls=1&mt=8
+
+    #
+    # Fitbit
+    #
+    fitbit_client_id                                      =
+    fitbit_client_secret                                  =
+    nutria_fitbit_client_id                               =
+    nutria_fitbit_client_secret                           =
+    optijourney_fitbit_client_id                          =
+    optijourney_fitbit_client_secret                      =
+
+    culturelle_fitbit_client_id                           =
+    culturelle_fitbit_client_secret                       =
+
+    dvelop_fitbit_client_id                               =
+    dvelop_fitbit_client_secret                           =
+
+    fitbit_redirect_uri                                   = https://api-dev.hologramsciences.com/fitbit
+    ios_fitbit_auth_redirect_location                     = com.eatwithava.ava://fitbit
+    android_fitbit_auth_redirect_location                 = com.eatwithava.ava://fitbit
+    ios_nutria_fitbit_auth_redirect_location              = com.nutriacoach.nutria://fitbit
+    android_nutria_fitbit_auth_redirect_location          = com.nutriacoach.nutria://fitbit
+    ios_optijourney_fitbit_auth_redirect_location         = uk.co.myoptifastjourney.optijourney://fitbit
+    android_optijourney_fitbit_auth_redirect_location     = https://app.eatwithava.com/assets/fitbit.html
+
+    ios_culturelle_fitbit_auth_redirect_location         = com.eatwithava.culturelle://fitbit
+    android_culturelle_fitbit_auth_redirect_location     = https://api-dev.hologramsciences.com/fitbit
+
+    ios_dvelop_fitbit_auth_redirect_location             = com.hologramsciences.dvelop://dvelop_app?deep_link=open
+    android_dvelop_fitbit_auth_redirect_location         = https://app-staging.eatwithava.com/assets/fitbit.html
+
+    # Firebase Messaging
+    #
+    fcm_mobile_url                                       = ""
+    fcm_phenology_url                                    = ""
+
+
+    #
+    # USDA
+    #
+    usda_api_key                                         = ZeQfoPR1blpQRxwBNRWk4v5u3TbH2P2IRyaNtNON
+
+    #
+    # YELP
+    #
+    yelp_api_key                                         = IucBD79ckiNa6UnOH1rbq0z7xLlDiHbIlo9X1o9O6tJWXU4Yx2OemhVPXPTPrPlmf9nHKAzRjl_F4th1kOrIQomVoWzifycNME8hHU27DCw9l5hbydwRnaIz1GHzWnYx
+
+
+    #
+    # Apple
+    #
+    # NOTE(nlim) This is useful if we have integrated with Apple appstore callback/webhooks for auto-renew subscriptions. We can validate posts back to use with this secret.
+    apple_appstore_password_secret                       = BEFAC4820DEF
+
+    #########################################################################################
+    #                             S3 Service                                                #
+    #########################################################################################
+
+
+    #########################################################################################
+    #                          Email Service                                                #
+    #########################################################################################
+
+    culturelle_shopify_multipass_secret     =
+    phenology_shopify_multipass_secret      =
+    culturelle_shopify_webhook_secret       =
+    dvelop_shopify_webhook_secret           =
+    phenology_shopify_webhook_secret        =
+
+    phenology_shopify_host                  = https://phenology-staging.myshopify.com
+
+    supergreens_shopify_host                =
+
+    dvelop_shopify_host                     = https://dvelop-immunity.myshopify.com
+    dvelop_shopify_api_key                  =
+    dvelop_shopify_password                 =
+
+    momentous_shopify_host                  = https://momentous-staging.myshopify.com
+
+    omega_quant_host_url                    = api-test.omegaquant.com
+    omega_quant_token                       = 3NscYK6tuGQWmfk9eZL/85y0zQiJNQWWRtQ3E7qEJlhgTlyYDuC4Gg==
+
+    dvelop_write_key                        = ""
+
+    #########################################################################################
+    #                          Iterable Email Service                                             #
+    #########################################################################################
+
+    iterable_email_url     = https://api.iterable.com/api/email/target
+    iterable_workflow_url  = https://api.iterable.com/api/workflows/triggerWorkflow
+    iterable_change_email_url  = https://api.iterable.com/api/users/updateEmail
+    iterable_subscriptions_url  = https://api.iterable.com/api/subscriptions
+    iterable_update_user_url    = https://api.iterable.com/api/users/update
+    iterable_bulk_update_user_url = https://api.iterable.com/api/users/bulkUpdate
+    iterable_register_device_url = https://api.iterable.com/api/users/registerDeviceToken
+    iterable_disable_device_url  = https://api.iterable.com/api/users/disableDevice
+    iterable_delete_user_url = https://api.iterable.com/api/users
+    iterable_email_api_key =
+    iterable_mobile_api_key =
+    iterable_push_url   = https://api.iterable.com/api/push/target
+
+
+    inne_api_host               = https://hologram.api.myferal.com/staging
+
+    phenology_shopify_shop_url  = https://phenology-staging.myshopify.com

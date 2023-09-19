@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: activemq-deployment
+  namespace: ava-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: activemq 
+  template:
+    metadata:
+      labels:
+        app: activemq
+    spec:
+      containers:
+        - name: activemq
+          image: 806240344948.dkr.ecr.us-east-1.amazonaws.com/activemq-plus:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 61616 # ActiveMQ port
+            - containerPort: 8161 # ActiveMQ web console port
+          resources:
+            limits:
+              memory: "1024Mi" 
+              cpu: "1" 
+            requests:
+              memory: "256Mi" 
+              cpu: "0.25" 
+

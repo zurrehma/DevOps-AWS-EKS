@@ -1,0 +1,30 @@
+locals {
+  # aws account name e.g prod-jenkins
+  aws_account       = "test-jenkins"
+  # eks related variables
+  eks_cluster_name = "eks-cluster"
+  eks_cluster_version = "1.27"
+  eks_autoscaling_group_min_size = 2
+  eks_autoscaling_group_desired_capacity = 2
+  eks_autoscaling_group_max_size = 2
+  eks_worker_group_instance_type = ["t3.large"]
+  eks_worker_ami_type = "AL2_x86_64"
+  # vpc name
+  vpc_name = "jenkins-vpc"
+  # This VPC will always create CIDR blocks in the 10.X.0.0/16 range. This variable is the X in this equation.
+  vpc_cidr_b_block = 130
+  # Requester VPC ID for VPC peering 
+  requester_vpc = "vpc-96da5af2"
+  
+  # jenkins related variables
+  jenkins_admin_user = "admin"
+  jenkins_admin_password = "Admin@123"
+  jenkins_namespace_name = "jenkins"
+
+  # common tags to all resources
+  tags = {
+    "team"        = "devops"
+    "service"     = "hologram"
+    "env"         = "demo"
+  }
+}

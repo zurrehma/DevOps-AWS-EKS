@@ -1,0 +1,109 @@
+
+module "label" {
+  source      = "cloudposse/label/null"
+  version     = "0.25.0"
+  environment = var.environment
+  attributes  = var.attributes
+  enabled     = var.enabled
+  tags        = var.tags
+  stage       = var.stage
+  name        = var.name
+}
+
+locals {
+  tags = merge(module.label.tags, var.tags)
+}
+
+data "aws_eks_cluster" "cluster" {
+  name = module.eks.cluster_id
+}
+
+data "aws_eks_cluster_auth" "cluster" {
+  name = module.eks.cluster_id
+}
+
+
+module "eks" {
+  source  = "terraform-aws-modules/eks/aws"
+  version = "18.28.0"
+
+  cluster_name    = var.cluster_name
+  cluster_version = var.cluster_version
+  subnet_ids      = var.subnets
+  vpc_id          = var.vpc_id
+  iam_role_name   = "${var.cluster_name}-role"
+  eks_managed_node_group_defaults = {
+    ami_type       = var.ami_type
+    instance_types = var.worker_group_instance_type
+
+  }
+
+  cluster_endpoint_private_access = true
+  cluster_endpoint_public_access  = true
+  
+  #Enable Control plane Logging 
+  cluster_enabled_log_types = ["audit", "api", "authenticator", "controllerManager", "scheduler"]
+  
+  #Enable KMS Key Encrption 
+  cluster_encryption_config = [{
+    provider_key_arn = aws_kms_key.eks_cluster_key.arn
+    resources = ["secrets"]
+  }]
+  attach_cluster_encryption_policy = true
+
+  #Cluster Addon 
+  cluster_addons = {
+    coredns = {
+      resolve_conflicts = "OVERWRITE"
+    }
+    kube-proxy = {}
+    vpc-cni = {
+      resolve_conflicts = "OVERWRITE"
+    }
+    aws-ebs-csi-driver = {}
+  }
+
+  #Node Group Configuration  
+  eks_managed_node_groups = {
+    "${var.cluster_name}-nodes" = {
+      min_size     = var.autoscaling_group_min_size
+      max_size     = var.autoscaling_group_max_size
+      desired_size = var.autoscaling_group_desired_capacity
+
+      instance_types = var.worker_group_instance_type
+      iam_role_additional_policies = [
+        "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy",
+        "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+      ]
+      pre_bootstrap_user_data = <<-EOT
+      #!/bin/bash
+      cd /tmp
+      sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
+      sudo start amazon-ssm-agent
+      EOT
+    }
+  }
+
+  tags = local.tags
+}
+
+resource "aws_security_group_rule" "allow_all_ingress" {
+  description       = "Allow incoming traffic from load balancer to Jenkins Controller"
+  type              = "ingress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = module.eks.node_security_group_id
+}
+
+resource "aws_security_group_rule" "allow_all_egress" {
+  description       = "Allow all outbound traffic"
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = module.eks.node_security_group_id
+}
+

@@ -1,0 +1,60 @@
+
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ava-server
+  namespace: ava-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ava-server
+  template:
+    metadata:
+      labels:
+        app: ava-server
+    spec:
+      containers:
+      - name: ava-server-container
+        image: 806240344948.dkr.ecr.us-east-1.amazonaws.com/hologram-backend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+          - name: ENVIRONMENT
+            value: "development"
+          - name: POSTGRESQL_HOST
+            value: "dev-rds.eatwithava.com"
+          - name: POSTGRESQL_DATABASE
+            value: "dev"
+          - name: POSTGRESQL_USER
+            value: "ava_server"
+          - name: POSTGRESQL_PASSWORD
+            value: "E9WE_tRg4_5E"
+          - name: POSTGRESQL_REPLICA_HOST
+            value: "db"
+          - name: ACTIVE_MQ_SERVER_URL
+            value: "nio://activemq-service.ava-server.svc.cluster.local:61616"
+          - name: REDIS_URL
+            value: "redis://redis-service.ava-server.svc.cluster.local:6379"
+
+        resources:
+          limits:
+            cpu: "2" 
+            memory: "3000Mi"  
+          requests:
+            cpu: "1"  
+            memory: "500Mi"  
+        # volumeMounts:
+        # - name: ava-volume
+        #   mountPath: /opt/ava-server/apache-tomee-plume-8.0.14/config/
+        # # - name: tomee-volume
+        # #   mountPath: /opt/ava-server/apache-tomee-plume-8.0.14/conf/tomee.xml     
+      # volumes:
+      # - name: ava-volume
+      #   configMap:
+      #     name: ava-configmap
+      # - name: tomee-volume
+      #   configMap:
+      #     name: tomee-configmap

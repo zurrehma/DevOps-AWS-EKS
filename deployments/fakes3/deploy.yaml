@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fakes3
+  namespace: ava-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fakes3
+  template:
+    metadata:
+      labels:
+        app: fakes3
+    spec:
+      containers:
+        - name: fakes3
+          image: olalond3/fakes3 
+          ports:
+            - containerPort: 4567 
+          env:
+            - name: FAKE_S3_ROOT
+              value: /data 
+          resources:
+            limits:
+              memory: "256Mi" 
+              cpu: "0.5" 
+            requests:
+              memory: "128Mi" 
+              cpu: "0.25" 
+
+
