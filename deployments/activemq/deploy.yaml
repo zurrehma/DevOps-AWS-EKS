@@ -1,8 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: activemq-deployment
-  namespace: ava-server
+  name: activemq
 spec:
   replicas: 1
   selector:
@@ -27,32 +26,4 @@ spec:
             requests:
               memory: "256Mi" 
               cpu: "0.25" 
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: activemq-service
-  namespace: ava-server
-spec:
-  selector:
-    app: activemq
-  ports:
-    - protocol: TCP
-      port: 61616 #JMS broker
-      targetPort: 61616 
-  type: ClusterIP
----
 
-apiVersion: v1
-kind: Service
-metadata:
-  name: activemq-web-console
-  namespace: ava-server
-spec:
-  selector:
-    app: activemq
-  ports:
-    - protocol: TCP
-      port: 8161 #ActiveMQ web console
-      targetPort: 8161 
-  type: ClusterIP

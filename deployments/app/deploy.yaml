@@ -1,8 +1,9 @@
+
+# deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ava-server
-  namespace: ava-server
 spec:
   replicas: 1
   selector:
@@ -42,20 +43,4 @@ spec:
             memory: "3000Mi"  
           requests:
             cpu: "1"  
-            memory: "500Mi"
-
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: ava-server-service
-  namespace: ava-server
-spec:
-  selector:
-    app: ava-server
-  ports:
-    - protocol: TCP
-      port: 8080
-      targetPort: 8080
-  type: ClusterIP
+            memory: "500Mi"  
