@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aws-auth
+  namespace: kube-system
+data:
+  mapRoles: |
+    - rolearn: arn:aws:iam::806240344948:user/eks-test
+      username: eks-test
+      groups:
+        - k8s-dev
+    - groups:
+      - system:bootstrappers
+      - system:nodes
+      rolearn: < eks-cluster-nodes-eks-node-group ARN >
+      username: system:node:{{EC2PrivateDNSName}}
+
+
+# Please make sure Roles ARN firstly after that you can apply      
