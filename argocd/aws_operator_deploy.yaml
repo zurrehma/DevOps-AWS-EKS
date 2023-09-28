@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: aws-secret-operator
+  namespace: argocd
+spec:
+  destination:
+    name: ''
+    namespace: kube-system
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: ''
+    repoURL: 'https://chatwork.github.io/charts'
+    targetRevision: 0.2.4
+    chart: aws-secret-operator
+    helm:
+      parameters:
+        - name: region
+          value: us-east-1
+  sources: []
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+

@@ -1,0 +1,37 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 50m
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.org/proxy-connect-timeout: 60s
+    nginx.org/proxy-read-timeout: 30s
+  name: nginx
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: api-k8.hologramsciences.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ava-server-service
+            port:
+              number: 8080
+      - path: /activemq
+        pathType: Prefix
+        backend:
+          service:
+            name: activemq-web-console
+            port:
+              number: 8161
+      - path: /fakes3
+        pathType: Prefix
+        backend:
+          service:
+            name: fakes3-service
+            port:
+              number: 4567       
+        

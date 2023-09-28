@@ -1,5 +1,3 @@
-
-# deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -25,12 +23,21 @@ spec:
             value: "development"
           - name: POSTGRESQL_HOST
             value: "dev-rds.eatwithava.com"
-          - name: POSTGRESQL_DATABASE
-            value: "dev"
-          - name: POSTGRESQL_USER
-            value: "ava_server"
-          - name: POSTGRESQL_PASSWORD
-            value: "E9WE_tRg4_5E"
+          - name: POSTGRESQL_DATABASE  
+            valueFrom:
+              secretKeyRef:
+                name: db-secret 
+                key: POSTGRESQL_DATABASE
+          - name: POSTGRESQL_USER  
+            valueFrom:
+              secretKeyRef:
+                name: db-secret 
+                key: POSTGRESQL_USER
+          - name: POSTGRESQL_PASSWORD  
+            valueFrom:
+              secretKeyRef:
+                name: db-secret 
+                key: POSTGRESQL_PASSWORD
           - name: POSTGRESQL_REPLICA_HOST
             value: "dev-rds.eatwithava.com"
           - name: ACTIVE_MQ_SERVER_URL

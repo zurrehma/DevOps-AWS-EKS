@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: aws-secret-operator
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+data:
+  name: QVdTLVNlY3JldC1PcGVyYXRvcg==
+  project: ZGVmYXVsdA==
+  type: aGVsbQ==
+  url: aHR0cHM6Ly9jaGF0d29yay5naXRodWIuaW8vY2hhcnRz
+
+
+
+
+
