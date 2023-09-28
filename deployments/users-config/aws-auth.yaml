@@ -12,7 +12,7 @@ data:
     - groups:
       - system:bootstrappers
       - system:nodes
-      rolearn: < eks-cluster-nodes-eks-node-group ARN >
+      rolearn: arn:aws:iam::806240344948:role/eks-cluster-nodes-eks-node-group-20230919032714411600000006
       username: system:node:{{EC2PrivateDNSName}}
 
 
