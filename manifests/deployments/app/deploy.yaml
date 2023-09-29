@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: ava-server-container
-        image: 806240344948.dkr.ecr.us-east-1.amazonaws.com/hologram-backend:latest
+        image: 806240344948.dkr.ecr.us-east-1.amazonaws.com/hologram-backend@sha256:2746f62de90bf3c1626844912eb971fa7d8ddddd77085b7788a6f9632c74aab6
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
