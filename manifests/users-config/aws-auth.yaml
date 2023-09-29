@@ -16,4 +16,4 @@ data:
       username: system:node:{{EC2PrivateDNSName}}
 
 
-# Please make sure Roles ARN firstly after that you can apply      
+# Please make sure Roles ARN firstly after that you can apply
