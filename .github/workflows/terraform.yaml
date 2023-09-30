@@ -81,8 +81,8 @@ jobs:
       - name: Terragrunt Plan
         run: terragrunt plan -out=ekstfplan
 
-      # - name: Terragrunt Apply
-      #   run: terragrunt apply -auto-approve ekstfplan
+      - name: Terragrunt Apply
+        run: terragrunt apply -auto-approve ekstfplan
 
 
 
