@@ -15,7 +15,8 @@ locals {
   vpc_cidr_b_block = 130
   # Requester VPC ID for VPC peering 
   requester_vpc = "vpc-96da5af2"
-  
+
+
   # jenkins related variables
   jenkins_admin_user = "admin"
   jenkins_admin_password = "Admin@123"
