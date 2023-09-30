@@ -19,11 +19,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install Terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_version: ${{ env.TF_VERSION }}
-
       - name: Configure AWS CLI
         run: |
           aws configure set default.region ${{ secrets.AWS_DEFAULT_REGION }}
@@ -62,12 +57,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Install Terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_version: ${{ env.TF_VERSION }}
-
+        
       - name: Configure AWS CLI
         run: |
           aws configure set default.region ${{ secrets.AWS_DEFAULT_REGION }}

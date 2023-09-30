@@ -73,7 +73,10 @@ module "eks" {
       instance_types = var.worker_group_instance_type
       iam_role_additional_policies = [
         "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy",
-        "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+        "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
+        "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
+        "arn:aws:iam::aws:policy/SecretsManagerReadWrite",
+        "arn:aws:iam::806240344948:policy/kms-read-write-policy",
       ]
       pre_bootstrap_user_data = <<-EOT
       #!/bin/bash
