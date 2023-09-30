@@ -38,16 +38,20 @@ jobs:
       - name: Print assumed role
         run: aws sts get-caller-identity
 
-      - name: current dir
-        run: pwd
-      - name: Initialize Terraform
-        run: terraform init
+      - name: Install Terragrunt
+        run: |
+          curl -Lo /tmp/terragrunt https://github.com/gruntwork-io/terragrunt/releases/download/v0.45.16/terragrunt_linux_amd64
+          chmod +x /tmp/terragrunt
+          sudo mv /tmp/terragrunt /usr/local/bin/
 
-      - name: Terraform Plan
-        run: terraform plan -out=vpctfplan
+      - name: Initialize Terragrunt
+        run: terragrunt init
 
-      - name: Terraform Apply
-        run: terraform apply -auto-approve vpctfplan
+      - name: Terragrunt Plan
+        run: terragrunt plan -out=vpctfplan
+
+      - name: Terragrunt Apply
+        run: terragrunt apply -auto-approve vpctfplan
 
   EKS-Infra-Terraform:
     runs-on: ubuntu-latest
@@ -75,17 +79,20 @@ jobs:
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
 
-      - name: Print assumed role
-        run: aws sts get-caller-identity
+      - name: Install Terragrunt
+        run: |
+          curl -Lo /tmp/terragrunt https://github.com/gruntwork-io/terragrunt/releases/download/v0.45.16/terragrunt_linux_amd64
+          chmod +x /tmp/terragrunt
+          sudo mv /tmp/terragrunt /usr/local/bin/
 
-      - name: Initialize Terraform
-        run: terraform init
+      - name: Initialize Terragrunt
+        run: terragrunt init
 
-      - name: Terraform Plan
-        run: terraform plan -out=ekstfplan
+      - name: Terragrunt Plan
+        run: terragrunt plan -out=ekstfplan
 
-      - name: Terraform Apply
-        run: terraform apply -auto-approve ekstfplan
+      - name: Terragrunt Apply
+        run: terragrunt apply -auto-approve ekstfplan
 
 
 
