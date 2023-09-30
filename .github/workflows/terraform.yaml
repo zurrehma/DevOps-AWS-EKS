@@ -56,7 +56,7 @@ jobs:
         working-directory: IAC-Files/demo/eks
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Configure AWS CLI
         run: |
@@ -64,7 +64,7 @@ jobs:
           aws configure set default.output json
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
@@ -75,8 +75,8 @@ jobs:
           chmod +x /tmp/terragrunt
           sudo mv /tmp/terragrunt /usr/local/bin/
 
-      # - name: Initialize Terragrunt
-      #   run: terragrunt init
+      - name: Initialize Terragrunt
+        run: terragrunt init
 
       - name: Terragrunt Plan
         run: terragrunt plan -out=ekstfplan
