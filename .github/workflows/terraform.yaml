@@ -27,13 +27,19 @@ jobs:
           aws configure set default.region ${{ secrets.AWS_DEFAULT_REGION }}
           aws configure set default.output json
 
-      - name: Assume AWS IAM Role
-        id: assume-role
+      - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-iam-role: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+      # - name: Assume AWS IAM Role
+      #   id: assume-role
+      #   uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     aws-iam-role: ${{ secrets.AWS_ROLE_ARN }}
+      #     aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+      - name: Print assumed role
+        run: aws sts get-caller-identity
       # - name: Assume IAM Role
       #   run: |
       #     TEMP_ROLE=$(aws sts assume-role --role-arn ${{ secrets.AWS_ROLE_ARN }} --role-session-name github-actions-role)
