@@ -1,4 +1,4 @@
-name: Build and Push to ECR
+name: Terraform Infra Workflow
 
 on:
   push:
@@ -32,23 +32,12 @@ jobs:
         with:
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-      # - name: Assume AWS IAM Role
-      #   id: assume-role
-      #   uses: aws-actions/configure-aws-credentials@v1
-      #   with:
-      #     aws-iam-role: ${{ secrets.AWS_ROLE_ARN }}
-      #     aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
       - name: Print assumed role
         run: aws sts get-caller-identity
-      # - name: Assume IAM Role
-      #   run: |
-      #     TEMP_ROLE=$(aws sts assume-role --role-arn ${{ secrets.AWS_ROLE_ARN }} --role-session-name github-actions-role)
-      #     export AWS_ACCESS_KEY_ID=$(echo $TEMP_ROLE | jq -r '.Credentials.AccessKeyId')
-      #     export AWS_SECRET_ACCESS_KEY=$(echo $TEMP_ROLE | jq -r '.Credentials.SecretAccessKey')
-      #     export AWS_SESSION_TOKEN=$(echo $TEMP_ROLE | jq -r '.Credentials.SessionToken')
 
       - name: Change Directory to Terraform VPC Subdirectory
-        run: cd ./IAC-Files/demo/vpc
+        run: cd IAC-Files/demo/vpc
 
       - name: Initialize Terraform
         run: terraform init
@@ -60,7 +49,7 @@ jobs:
         run: terraform apply -auto-approve vpctfplan
 
       - name: Change Directory to EKS Terraform Subdirectory
-        run: cd ./IAC-Files/demo/vpc
+        run: cd IAC-Files/demo/vpc
 
       - name: Initialize Terraform
         run: terraform init
