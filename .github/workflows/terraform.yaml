@@ -10,9 +10,11 @@ permissions:
 env:
   TF_VERSION: 1.4.6
 jobs:
-  build-and-push:
+  VPC-Infra-Terraform:
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        working-directory: IAC-Files/demo/vpc
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -36,9 +38,6 @@ jobs:
       - name: Print assumed role
         run: aws sts get-caller-identity
 
-      - name: Change Directory to Terraform VPC Subdirectory
-        run: cd IAC-Files/demo/vpc
-
       - name: Initialize Terraform
         run: terraform init
 
@@ -48,8 +47,34 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve vpctfplan
 
-      - name: Change Directory to EKS Terraform Subdirectory
-        run: cd IAC-Files/demo/vpc
+  EKS-Infra-Terraform:
+    runs-on: ubuntu-latest
+    needs: VPC-Infra-Terraform
+    defaults:
+      run:
+        working-directory: IAC-Files/demo/eks
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Configure AWS CLI
+        run: |
+          aws configure set default.region ${{ secrets.AWS_DEFAULT_REGION }}
+          aws configure set default.output json
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+
+      - name: Print assumed role
+        run: aws sts get-caller-identity
 
       - name: Initialize Terraform
         run: terraform init
@@ -59,5 +84,8 @@ jobs:
 
       - name: Terraform Apply
         run: terraform apply -auto-approve ekstfplan
+
+
+
 
 
