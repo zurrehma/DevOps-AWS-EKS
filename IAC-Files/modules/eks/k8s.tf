@@ -1,5 +1,5 @@
 provider "kubernetes" {
   alias = "eks-cluster"
-  config_path = "cluster.yaml"  
+  config_path = module.eks.kubeconfig
 }
 
