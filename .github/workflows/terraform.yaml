@@ -81,11 +81,17 @@ jobs:
       - name: Terragrunt Apply
         run: terragrunt apply -auto-approve ekstfplan
 
+      - name: Save kubeconfig locally
+        run: |
+          mkdir -p $HOME/.kube
+          terraform output kubeconfig > $HOME/.kube/config
+        shell: bash
+    
       - name: Upload kubeconfig as an artifact
         uses: actions/upload-artifact@v3
         with:
           name: kubeconfig
-          path: cluster.yaml
+          path: $HOME/.kube/config
 
   Update-EKS-Cluster:
     runs-on: ubuntu-latest
