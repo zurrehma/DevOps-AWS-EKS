@@ -38,6 +38,8 @@ jobs:
       - name: Print assumed role
         run: aws sts get-caller-identity
 
+      - name: current dir
+        run: pwd
       - name: Initialize Terraform
         run: terraform init
 
