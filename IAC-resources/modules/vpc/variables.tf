@@ -16,12 +16,11 @@ variable "skip_region_validation" {
 variable "cidr_b_block" {
   description = "This VPC will always create CIDR blocks in the 10.X.0.0/16 range. This variable is the X in this equation."
   type        = number
-  default     = 130
 }
 
 variable "vpc_name" {
   type    = string
-  default = "eks-vpc"
+  default = ""
 }
 
 #------------------------------------------------------------------------------
@@ -73,7 +72,7 @@ variable "name" {
     EOT
 }
 variable "requester_vpc" {
-  type    = string
+  type = string
   # default = "vpc-96da5af2"
 }
 

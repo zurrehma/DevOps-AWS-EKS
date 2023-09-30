@@ -2,6 +2,7 @@
 module "label" {
   source      = "cloudposse/label/null"
   version     = "0.25.0"
+  namespace   = var.namespace
   environment = var.environment
   attributes  = var.attributes
   enabled     = var.enabled
@@ -27,7 +28,7 @@ module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "18.28.0"
 
-  cluster_name    = var.cluster_name
+  cluster_name    = "${var.namespace}-${var.environment}-eks-cluster"
   cluster_version = var.cluster_version
   subnet_ids      = var.subnets
   vpc_id          = var.vpc_id
@@ -40,14 +41,14 @@ module "eks" {
 
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = true
-  
+
   #Enable Control plane Logging 
   cluster_enabled_log_types = ["audit", "api", "authenticator", "controllerManager", "scheduler"]
-  
+
   #Enable KMS Key Encrption 
   cluster_encryption_config = [{
     provider_key_arn = aws_kms_key.eks_cluster_key.arn
-    resources = ["secrets"]
+    resources        = ["secrets"]
   }]
   attach_cluster_encryption_policy = true
 
@@ -65,7 +66,7 @@ module "eks" {
 
   #Node Group Configuration  
   eks_managed_node_groups = {
-    "${var.cluster_name}-nodes" = {
+    "${var.namespace}-${var.environment}-nodes" = {
       min_size     = var.autoscaling_group_min_size
       max_size     = var.autoscaling_group_max_size
       desired_size = var.autoscaling_group_desired_capacity

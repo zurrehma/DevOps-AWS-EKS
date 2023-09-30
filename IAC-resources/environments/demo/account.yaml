@@ -1,0 +1,24 @@
+---
+# These variables apply to the entire account. They are automatically pulled
+# in using yamldecode and merged into the inputs of the root terragrunt.hcl
+# file.
+# AWS region
+aws_region: us-east-1
+cluster_version : "1.27"
+autoscaling_group_min_size : 4
+autoscaling_group_desired_capacity : 4
+autoscaling_group_max_size : 4
+worker_group_instance_type : ["t2.medium"]
+ami_type : "AL2_x86_64"
+# This VPC will always create CIDR blocks in the 10.X.0.0/16 range. This variable is the X in this equation.
+cidr_b_block : 131
+# Requester VPC ID for VPC peering 
+requester_vpc : "vpc-96da5af2"  
+# common tags to all resources
+# A short (3-4 letters) abbreviation of the company name, to ensure globally unique IDs for things like S3 buckets
+namespace : holo
+# Name of the environment
+environment : demo
+tags:
+  resource_created_by: "GitHub Repo"
+  repo_name: "dvelop-infrastructure/IAC-resources"
