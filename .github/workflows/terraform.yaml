@@ -75,8 +75,8 @@ jobs:
           chmod +x /tmp/terragrunt
           sudo mv /tmp/terragrunt /usr/local/bin/
 
-      - name: Initialize Terragrunt
-        run: terragrunt init
+      # - name: Initialize Terragrunt
+      #   run: terragrunt init
 
       - name: Terragrunt Plan
         run: terragrunt plan -out=ekstfplan
