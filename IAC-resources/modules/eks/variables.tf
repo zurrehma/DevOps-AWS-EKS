@@ -15,13 +15,12 @@ variable "vpc_id" {
 variable "cluster_name" {
   type        = string
   description = "The name of the EKS cluster."
-  default     = "eks-cluster"
+  default     = ""
 }
 
 variable "cluster_version" {
   type        = string
   description = "The version of the EKS cluster."
-  default     = "1.27"
 }
 
 variable "ami_type" {
