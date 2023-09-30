@@ -30,9 +30,6 @@ jobs:
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
 
-      - name: Print assumed role
-        run: aws sts get-caller-identity
-
       - name: Install Terragrunt
         run: |
           curl -Lo /tmp/terragrunt https://github.com/gruntwork-io/terragrunt/releases/download/v0.45.16/terragrunt_linux_amd64
