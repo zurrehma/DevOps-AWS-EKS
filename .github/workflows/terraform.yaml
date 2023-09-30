@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - master
+permissions:
+  id-token: write   # This is required for requesting the JWT
+  contents: read    # This is required for actions/checkout
 env:
   TF_VERSION: 1.4.6
 jobs:
@@ -24,12 +27,19 @@ jobs:
           aws configure set default.region ${{ secrets.AWS_DEFAULT_REGION }}
           aws configure set default.output json
 
-      - name: Assume IAM Role
-        run: |
-          TEMP_ROLE=$(aws sts assume-role --role-arn ${{ secrets.AWS_ROLE_ARN }} --role-session-name github-actions-role)
-          export AWS_ACCESS_KEY_ID=$(echo $TEMP_ROLE | jq -r '.Credentials.AccessKeyId')
-          export AWS_SECRET_ACCESS_KEY=$(echo $TEMP_ROLE | jq -r '.Credentials.SecretAccessKey')
-          export AWS_SESSION_TOKEN=$(echo $TEMP_ROLE | jq -r '.Credentials.SessionToken')
+      - name: Assume AWS IAM Role
+        id: assume-role
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-iam-role: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
+      # - name: Assume IAM Role
+      #   run: |
+      #     TEMP_ROLE=$(aws sts assume-role --role-arn ${{ secrets.AWS_ROLE_ARN }} --role-session-name github-actions-role)
+      #     export AWS_ACCESS_KEY_ID=$(echo $TEMP_ROLE | jq -r '.Credentials.AccessKeyId')
+      #     export AWS_SECRET_ACCESS_KEY=$(echo $TEMP_ROLE | jq -r '.Credentials.SecretAccessKey')
+      #     export AWS_SESSION_TOKEN=$(echo $TEMP_ROLE | jq -r '.Credentials.SessionToken')
 
       - name: Change Directory to Terraform VPC Subdirectory
         run: cd ./IAC-Files/demo/vpc
