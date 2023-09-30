@@ -105,8 +105,8 @@ jobs:
     - name: Verify kubectl configuration
       run: kubectl config current-context
 
-    # - name: install fluentd 
-    #   run: kubectl apply -f 
+    - name: Get Namespaces 
+      run: kubectl get ns  
 
 
 
