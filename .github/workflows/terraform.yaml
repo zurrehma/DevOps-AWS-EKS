@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: IAC-Files/demo/vpc
+        working-directory: IAC-resources/environments/demo/vpc
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -50,7 +50,7 @@ jobs:
     needs: VPC-Infra-Terraform
     defaults:
       run:
-        working-directory: IAC-Files/demo/eks
+        working-directory: IAC-resources/environments/demo/eks
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -103,10 +103,10 @@ jobs:
       with:
         name: kubeconfig
         path: $HOME/.kube
-    - name: Set KUBECONFIG environment variable
-      run: |
-        echo "::set-env name=KUBECONFIG::$HOME/.kube/cluster.yaml"
-      shell: bash
+    # - name: Set KUBECONFIG environment variable
+    #   run: |
+    #     echo "::set-env name=KUBECONFIG::$HOME/.kube/cluster.yaml"
+    #   shell: bash
 
     - name: Verify kubectl configuration
       run: kubectl config current-context
