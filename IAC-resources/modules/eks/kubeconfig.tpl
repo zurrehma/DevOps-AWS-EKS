@@ -12,5 +12,4 @@ contexts:
 current-context: my-cluster
 users:
 - name: my-cluster
-  user:
-    token: ${cluster_token}
+

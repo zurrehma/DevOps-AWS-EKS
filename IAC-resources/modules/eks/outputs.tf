@@ -5,8 +5,7 @@ output "node_security_group_id" {
 output "kubeconfig" {
   value = templatefile("${path.module}/kubeconfig.tpl", {
     cluster_endpoint                 = module.eks.cluster_endpoint
-    cluster_certificate_authority   = module.eks.cluster_certificate_authority[0].data
-    cluster_token                   = module.eks.cluster_token
+    cluster_certificate_authority   = module.eks.cluster_certificate_authority_data
   })
 }
 
