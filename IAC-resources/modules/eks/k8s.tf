@@ -13,9 +13,9 @@ resource "kubernetes_namespace" "argocd" {
     name = "argocd"
   }
 }
-resource "kubernetes_manifest" "argocd" {
-  manifest = file("${path.module}/argocd.yaml")
-}
+# resource "kubernetes_manifest" "argocd" {
+#   manifest = file("${path.module}/argocd.yaml")
+# }
 
 
 
