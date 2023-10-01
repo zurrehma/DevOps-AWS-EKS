@@ -14,8 +14,7 @@ resource "kubernetes_namespace" "argocd" {
   }
 }
 resource "kubernetes_manifest" "argocd" {
-  # manifest = file("${path.module}/argocd.yaml")
-  manifest = file("argocd.yaml")
+   manifest = yamldecode(file("argocd.yaml"))
 }
 
 

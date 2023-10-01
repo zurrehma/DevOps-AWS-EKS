@@ -13,4 +13,5 @@ dependency "vpc"{
 inputs = {
   vpc_id = dependency.vpc.outputs.context.vpc_id
   subnets = dependency.vpc.outputs.context.private_subnets
+  
 }

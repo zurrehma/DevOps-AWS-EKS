@@ -77,7 +77,7 @@ module "eks" {
         "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
         "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
         "arn:aws:iam::aws:policy/SecretsManagerReadWrite",
-        "arn:aws:iam::806240344948:policy/kms-read-write-policy",
+        "aws_iam_policy.kms_policy.arn"
       ]
       pre_bootstrap_user_data = <<-EOT
       #!/bin/bash
