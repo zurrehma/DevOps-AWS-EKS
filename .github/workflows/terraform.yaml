@@ -35,11 +35,9 @@ jobs:
           curl -Lo /tmp/terragrunt https://github.com/gruntwork-io/terragrunt/releases/download/v0.45.16/terragrunt_linux_amd64
           chmod +x /tmp/terragrunt
           sudo mv /tmp/terragrunt /usr/local/bin/
-      - name: list dir
-        run: ls -la IAC-resources/environments/demo/
         
       - name: Initialize Terragrunt
-        run: terragrunt init
+        run: terragrunt init -input=false
 
       - name: Terragrunt Plan
         run: terragrunt plan -out=vpctfplan
