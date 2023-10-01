@@ -19,6 +19,10 @@ requester_vpc : "vpc-96da5af2"
 namespace : holo
 # Name of the environment
 environment : demo
+#aws-auth users 
+aws-roles: ['']
+
+
 tags:
   resource_created_by: "GitHub Repo"
   repo_name: "dvelop-infrastructure/IAC-resources"
