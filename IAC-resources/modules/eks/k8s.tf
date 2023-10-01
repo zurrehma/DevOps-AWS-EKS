@@ -8,8 +8,15 @@ provider "kubernetes" {
     command     = "aws"
   }
 }
-resource "kubernetes_namespace" "test" {
+resource "kubernetes_namespace" "argocd" {
   metadata {
-    name = "test"
+    name = "argocd"
   }
 }
+# resource "kubernetes_manifest" "argocd" {
+#   manifest = file("${path.module}/argocd.yaml")
+# }
+
+
+
+
