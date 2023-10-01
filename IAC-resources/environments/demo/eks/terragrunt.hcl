@@ -15,5 +15,5 @@ locals {
 inputs = {
   vpc_id = dependency.vpc.outputs.context.vpc_id
   subnets = dependency.vpc.outputs.context.private_subnets
-  aws-rols = tags = local.common_vars.aws-users
+  aws-rols = local.common_vars.aws-users
 }
