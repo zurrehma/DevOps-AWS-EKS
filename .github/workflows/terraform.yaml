@@ -37,7 +37,7 @@ jobs:
           sudo mv /tmp/terragrunt /usr/local/bin/
         
       - name: Initialize Terragrunt
-        run: terragrunt init -y
+        run: terragrunt init -lock=true -force
 
       - name: Terragrunt Plan
         run: terragrunt plan -out=vpctfplan
@@ -103,6 +103,7 @@ jobs:
       with:
         name: kubeconfig
         path: $HOME/.kube
+
     # - name: Set KUBECONFIG environment variable
     #   run: |
     #     echo "::set-env name=KUBECONFIG::$HOME/.kube/cluster.yaml"
