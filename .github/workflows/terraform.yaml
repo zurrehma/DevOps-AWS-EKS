@@ -36,7 +36,7 @@ jobs:
           chmod +x /tmp/terragrunt
           sudo mv /tmp/terragrunt /usr/local/bin/
       - name: list dir
-        run: ls -la
+        run: ls -la IAC-resources/environments/demo/
         
       - name: Initialize Terragrunt
         run: terragrunt init
