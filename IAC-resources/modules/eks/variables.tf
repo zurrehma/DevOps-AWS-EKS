@@ -113,3 +113,10 @@ variable "aws-roles" {
   })
   
 }
+variable "aws-users" {
+  type = object({
+    arn = string
+    name= string
+  })
+  
+}
