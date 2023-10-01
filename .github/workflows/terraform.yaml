@@ -37,7 +37,7 @@ jobs:
           sudo mv /tmp/terragrunt /usr/local/bin/
         
       - name: Initialize Terragrunt
-        run: terragrunt init -input=false
+        run: terragrunt init -y
 
       - name: Terragrunt Plan
         run: terragrunt plan -out=vpctfplan
