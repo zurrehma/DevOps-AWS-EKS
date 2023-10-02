@@ -87,31 +87,17 @@ module "eks" {
       EOT
     }
   }
-  # # aws-auth configmap
+# aws-auth configmap
   manage_aws_auth_configmap = true
-
-  # aws_auth_roles = [
-  #   {
-  #     userarn  = "arn:aws:iam::806240344948:user/zahid"
-  #     username = "zahid"
-  #     groups   = ["system:masters"]
-  #   }
-  # ]
 
   aws_auth_users = [
     {
       for_each = var.aws-users
 
-      userarn = each.arn
-      username = each.name
-      groups   = ["system:masters"]
+      userarn = each.value.arn
+      username = each.key
+      groups   = each.value.group
     }
-
-    # {
-    #   userarn  = "arn:aws:iam::806240344948:user/zahid"
-    #   username = "zahid"
-    #   groups   = ["system:masters"]
-    # }
   ]
   tags = local.tags
 }

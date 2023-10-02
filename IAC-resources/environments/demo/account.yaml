@@ -21,10 +21,9 @@ namespace : holo
 environment : demo
 #aws-auth users 
 aws-users:
-  - name: arn
-    value: arn:aws:iam::806240344948:user/zahid
-  - name: username
-    value: zahid
+  zahid:
+    arn: "arn:aws:iam::806240344948:user/zahid"
+    group: "system:masters"                     #avaiable groups for readonly user "k8s-dev"
 
 
 tags:

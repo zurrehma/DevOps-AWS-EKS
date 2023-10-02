@@ -29,6 +29,3 @@ resource "kubernetes_cluster_role_binding" "k8s-dev" {
     api_group = "rbac.authorization.k8s.io"
   }
 }
-
-
-
