@@ -105,11 +105,18 @@ variable "name" {
     The "name" tag is set to the full `id` string. There is no tag with the value of the `name` input.
     EOT
 }
+variable "aws-users" {
+  type = list(object({
+    arn   = string
+    name  = string
+    group = string
+  }))
+}
+
 # variable "aws-users" {
-#   type = object({
-#       arn = string
-#       name= string
-#       group= string
-#   })
-  
+#   type = map(object({
+#     arn   = string
+#     name  = string
+#     group = string
+#   }))
 # }
