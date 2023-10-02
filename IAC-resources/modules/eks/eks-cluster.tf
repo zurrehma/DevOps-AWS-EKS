@@ -77,7 +77,7 @@ module "eks" {
         "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
         "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
         "arn:aws:iam::aws:policy/SecretsManagerReadWrite",
-        "aws_iam_policy.kms_policy.arn"
+        aws_iam_policy.kms_policy.arn
       ]
       pre_bootstrap_user_data = <<-EOT
       #!/bin/bash
@@ -92,11 +92,14 @@ module "eks" {
 
   aws_auth_users = [
     {
-      for_each = var.aws-users
+      userarn  = "arn:aws:iam::806240344948:user/zahid"
+      username = "zahid"
+      groups   = ["system:masters"]
+      # for_each = var.aws-users
 
-      userarn = each.value.arn
-      username = each.key
-      groups   = each.value.group
+      # userarn = each.value.arn
+      # username = each.key
+      # groups   = each.value.group
     }
   ]
   tags = local.tags

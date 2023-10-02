@@ -22,6 +22,7 @@ environment : demo
 #aws-auth users 
 aws-users:
   zahid:
+    name: zahid
     arn: "arn:aws:iam::806240344948:user/zahid"
     group: "system:masters"                     #avaiable groups for readonly user "k8s-dev"
 
