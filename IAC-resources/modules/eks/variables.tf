@@ -107,9 +107,9 @@ variable "name" {
 }
 variable "aws-users" {
   type = list(object({
-    arn   = string
-    name  = string
-    group = string
+    arn    = string
+    name   = string
+    groups = list(string)
   }))
 }
 
