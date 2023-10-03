@@ -18,7 +18,10 @@ variable "cluster_crt" {
   default     = ""
 }
 
-variable "cluster_token" {
-  type        = string
-  description = "The version of the EKS cluster."
+# variable "cluster_token" {
+#   type        = string
+#   description = "The version of the EKS cluster."
+# }
+variable "cluster_id" {
+  type = string
 }
