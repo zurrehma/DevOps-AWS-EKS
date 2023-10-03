@@ -76,8 +76,7 @@ module "eks" {
         "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy",
         "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
         "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
-        "arn:aws:iam::aws:policy/SecretsManagerReadWrite",
-        aws_iam_policy.kms_policy.arn
+        "arn:aws:iam::aws:policy/SecretsManagerReadWrite"
       ]
       pre_bootstrap_user_data = <<-EOT
       #!/bin/bash
@@ -121,3 +120,8 @@ resource "aws_security_group_rule" "allow_all_egress" {
   security_group_id = module.eks.node_security_group_id
 }
 
+resource "aws_iam_policy_attachment" "eks_policy_attachment" {
+  name       = "eks-policy-attachment"
+  policy_arn = aws_iam_policy.kms_policy.arn
+  roles      = [eks.eks_managed_node_groups.holo-demo-nodes.iam_role_arn]
+}
