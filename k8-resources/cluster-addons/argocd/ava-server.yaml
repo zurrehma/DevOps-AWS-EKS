@@ -6,16 +6,19 @@ metadata:
 spec:
   destination:
     name: ''
-    namespace: ava-server
+    namespace: ava-sever
     server: 'https://kubernetes.default.svc'
   source:
-    path: ./deployments/app
+    path: ./k8-resources/app-deployments/
     repoURL: 'git@github.com:EatWithAva/dvelop-infrastructure.git'
     targetRevision: master
     directory:
       recurse: true
-  sources: []
   project: default
   syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
