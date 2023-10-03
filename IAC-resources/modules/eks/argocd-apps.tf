@@ -85,6 +85,7 @@ resource "kubernetes_manifest" "application_cluster_addons_nlb_" {
     "kind" = "Application"
     "metadata" = {
       "name" = "cluster-addons(nlb)"
+      "namespace" = "argocd"
     }
     "spec" = {
       "destination" = {
