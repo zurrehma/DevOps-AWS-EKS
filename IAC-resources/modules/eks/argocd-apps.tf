@@ -79,38 +79,38 @@ resource "kubernetes_manifest" "application_argocd_aws_secret_operator" {
   }
 }
 
-resource "kubernetes_manifest" "application_argocd_ava_server" {
-  manifest = {
-    "apiVersion" = "argoproj.io/v1alpha1"
-    "kind" = "Application"
-    "metadata" = {
-      "name" = "cluster-addons"
-      "namespace" = "argocd"
-    }
-    "spec" = {
-      "destination" = {
-        "name" = ""
-        "namespace" = "ingress-nginx"
-        "server" = "https://kubernetes.default.svc"
-      }
-      "project" = "default"
-      "source" = {
-        "directory" = {
-          "recurse" = true
-        }
-        "path" = "./k8-resources/cluster-addons"
-        "repoURL" = "git@github.com:EatWithAva/dvelop-infrastructure.git"
-        "targetRevision" = "master"
-      }
-      "syncPolicy" = {
-          "automated" = [
-            "prune=true",
-            "selfHeal=true"
-          ]  
-        "syncOptions" = [
-          "CreateNamespace=true",
-        ]
-      }
-    }
-  }
-}
+# resource "kubernetes_manifest" "application_argocd_cluster-addons" {
+#   manifest = {
+#     "apiVersion" = "argoproj.io/v1alpha1"
+#     "kind" = "Application"
+#     "metadata" = {
+#       "name" = "cluster-addons"
+#       "namespace" = "argocd"
+#     }
+#     "spec" = {
+#       "destination" = {
+#         "name" = ""
+#         "namespace" = "ingress-nginx"
+#         "server" = "https://kubernetes.default.svc"
+#       }
+#       "project" = "default"
+#       "source" = {
+#         "directory" = {
+#           "recurse" = true
+#         }
+#         "path" = "./k8-resources/cluster-addons"
+#         "repoURL" = "git@github.com:EatWithAva/dvelop-infrastructure.git"
+#         "targetRevision" = "master"
+#       }
+#       "syncPolicy" = {
+#           "automated" = [
+#             "prune=true",
+#             "selfHeal=true"
+#           ]  
+#         "syncOptions" = [
+#           "CreateNamespace=true",
+#         ]
+#       }
+#     }
+#   }
+# }
