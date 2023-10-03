@@ -84,7 +84,7 @@ resource "kubernetes_manifest" "application_cluster_addons_nlb_" {
     "apiVersion" = "argoproj.io/v1alpha1"
     "kind" = "Application"
     "metadata" = {
-      "name" = "cluster-addons(nlb)"
+      "name" = "nlb-cluster-addon"
       "namespace" = "argocd"
     }
     "spec" = {
