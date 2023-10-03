@@ -10,21 +10,27 @@ resource "null_resource" "wait_for_eks" {
 
 provider "kubernetes" {
   # alias = "eks-cluster"
-  host                   = data.aws_eks_cluster.cluster.endpoint
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
-  token                  = data.aws_eks_cluster_auth.cluster.token
+  host                   = var.cluster_endpoint
+  cluster_ca_certificate = base64decode(var.cluster_crt)
+  token                  = var.cluster_token
 }
 provider "helm" {
   kubernetes {
-    # alias = "eks-cluster"
-    host                   = data.aws_eks_cluster.cluster.endpoint
-    cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
-    token                  = data.aws_eks_cluster_auth.cluster.token
+    host                   = var.cluster_endpoint
+    cluster_ca_certificate = base64decode(var.cluster_crt)
+    token                  = var.cluster_token
   }
 }
 
 
-
+# provider "helm" {
+#   kubernetes {
+#     # alias = "eks-cluster"
+#     host                   = data.aws_eks_cluster.cluster.endpoint
+#     cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
+#     token                  = data.aws_eks_cluster_auth.cluster.token
+#   }
+# }
 
 
 

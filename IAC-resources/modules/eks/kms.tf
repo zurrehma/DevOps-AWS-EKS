@@ -4,7 +4,7 @@ resource "aws_kms_key" "eks_cluster_key" {
 }
 
 resource "aws_iam_policy" "kms_policy" {
-  name        = "kms-eks-policy"
+  name        = "${var.cluster_name}-kms-policy"
   description = "KMS IAM policy created with Terraform"
 
   policy = jsonencode({

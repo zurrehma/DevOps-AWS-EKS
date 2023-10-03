@@ -124,5 +124,5 @@ resource "aws_security_group_rule" "allow_all_egress" {
 # resource "aws_iam_policy_attachment" "eks_policy_attachment" {
 #   name       = "eks-policy-attachment"
 #   policy_arn = aws_iam_policy.kms_policy.arn
-#   roles      = [eks.eks_managed_node_groups.holo-demo-nodes.iam_role_arn]
+#   roles      = [module.eks.eks_managed_node_groups.iam_role_arn]
 # }
