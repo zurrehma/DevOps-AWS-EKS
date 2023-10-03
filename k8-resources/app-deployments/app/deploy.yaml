@@ -50,4 +50,4 @@ spec:
             memory: "3000Mi"  
           requests:
             cpu: "1"  
-            memory: "500Mi"  
+            memory: "600Mi"  
