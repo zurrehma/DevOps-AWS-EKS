@@ -88,7 +88,7 @@ module "eks" {
     }
   }
   # aws-auth configmap
-  manage_aws_auth_configmap = true
+  manage_aws_auth_configmap = false
 
   aws_auth_users = [
     for user in var.aws-users :
@@ -121,8 +121,8 @@ resource "aws_security_group_rule" "allow_all_egress" {
   security_group_id = module.eks.node_security_group_id
 }
 
-# resource "aws_iam_policy_attachment" "eks_policy_attachment" {
-#   name       = "eks-policy-attachment"
-#   policy_arn = aws_iam_policy.kms_policy.arn
-#   roles      = [module.eks.eks_managed_node_groups.iam_role_arn]
-# }
+resource "aws_iam_policy_attachment" "eks_policy_attachment" {
+  name       = "${var.namespace}-${var.environment}-policy-attachment"
+  policy_arn = aws_iam_policy.kms_policy.arn
+  roles      = [module.eks.eks_managed_node_groups.iam_role_arn]
+}
