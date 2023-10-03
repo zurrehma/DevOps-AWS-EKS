@@ -112,3 +112,42 @@ resource "kubernetes_manifest" "application_cluster_addons_nlb_" {
     }
   }
 }
+
+# Ava Server App
+
+resource "kubernetes_manifest" "application_argocd_ava_server" {
+  manifest = {
+    "apiVersion" = "argoproj.io/v1alpha1"
+    "kind" = "Application"
+    "metadata" = {
+      "name" = "ava-server"
+      "namespace" = "argocd"
+    }
+    "spec" = {
+      "destination" = {
+        "name" = ""
+        "namespace" = "ava-sever"
+        "server" = "https://kubernetes.default.svc"
+      }
+      "project" = "default"
+      "source" = {
+        "directory" = {
+          "recurse" = true
+        }
+        "path" = "./k8-resources/app-deployments/"
+        "repoURL" = "git@github.com:EatWithAva/dvelop-infrastructure.git"
+        "targetRevision" = "master"
+      }
+      "syncPolicy" = {
+        "automated" = {
+          "prune" = true
+          "selfHeal" = true
+        }
+        "syncOptions" = [
+          "CreateNamespace=true",
+          "ApplyOutOfSyncOnly=true",
+        ]
+      }
+    }
+  }
+}
