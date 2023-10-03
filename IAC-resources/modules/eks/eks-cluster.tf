@@ -93,16 +93,16 @@ module "eks" {
   }
   # aws-auth configmap
   manage_aws_auth_configmap = true
-  aws_auth_roles = [
-    {
-      rolearn  = module.eks.eks_managed_node_group.iam_role_arn
-      username = "system:node:{{EC2PrivateDNSName}}"
-      groups = [
-        "system:bootstrappers",
-        "system:nodes",
-      ]
-    }
-  ]
+  # aws_auth_roles = [
+  #   {
+  #     rolearn  = module.eks.eks_managed_node_group.iam_role_arn
+  #     username = "system:node:{{EC2PrivateDNSName}}"
+  #     groups = [
+  #       "system:bootstrappers",
+  #       "system:nodes",
+  #     ]
+  #   }
+  # ]
   aws_auth_users = [
     for user in var.aws-users :
     {
