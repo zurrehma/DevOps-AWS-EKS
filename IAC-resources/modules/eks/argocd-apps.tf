@@ -97,7 +97,7 @@ resource "kubernetes_manifest" "application_cluster_addons_nlb_" {
       "source" = {
         "path" = "./k8-resources/cluster-addons/ingress"
         "repoURL" = "git@github.com:EatWithAva/dvelop-infrastructure.git"
-        "targetRevision" = "master"
+        "targetRevision" = "dev"
       }
       "syncPolicy" = {
         "automated" = {
@@ -136,7 +136,7 @@ resource "kubernetes_manifest" "application_argocd_ava_server" {
         }
         "path" = "./k8-resources/app-deployments/"
         "repoURL" = "git@github.com:EatWithAva/dvelop-infrastructure.git"
-        "targetRevision" = "master"
+        "targetRevision" = "dev"
       }
       "syncPolicy" = {
         "automated" = {
