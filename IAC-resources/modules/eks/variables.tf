@@ -112,11 +112,3 @@ variable "aws-users" {
     groups = list(string)
   }))
 }
-
-# variable "aws-users" {
-#   type = map(object({
-#     arn   = string
-#     name  = string
-#     group = string
-#   }))
-# }

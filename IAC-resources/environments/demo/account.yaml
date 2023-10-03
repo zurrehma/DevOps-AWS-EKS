@@ -21,19 +21,8 @@ namespace : holo
 environment : demo
 #aws-auth users 
 aws-users:
-  # - { name: "zahid", arn: "arn:aws:iam::806240344948:user/zahid", group: "system:masters" } 
-  # - { name: "eks-test", arn: "arn:aws:iam::806240344948:user/eks-test", group: "k8s-dev" }      
   - { name: "zahid", arn: "arn:aws:iam::806240344948:user/zahid", groups: ["system:masters"] }
-  - { name: "eks-test", arn: "arn:aws:iam::806240344948:user/eks-test", groups: ["k8s-dev","system:masters"] }               #avaiable groups for readonly user "k8s-dev"
-# aws_users:
-#   zahid:
-#     name: "zahid"
-#     arn: "arn:aws:iam::806240344948:user/zahid"
-#     group: "system:masters"
-#   eks-test:
-#     name: "eks-test"
-#     arn: "arn:aws:iam::806240344948:user/eks-test"
-#     group: "k8s-dev"
+  - { name: "eks-test", arn: "arn:aws:iam::806240344948:user/eks-test", groups: ["k8s-dev"] }               #avaiable groups for readonly user "k8s-dev"
 
 tags:
   resource_created_by: "GitHub Repo"
