@@ -33,7 +33,7 @@ module "eks" {
   subnet_ids      = var.subnets
   vpc_id          = var.vpc_id
   iam_role_name   = "${var.namespace}-${var.environment}-role"
-  iam_role_use_name_prefix = false
+  # iam_role_use_name_prefix = false
   eks_managed_node_group_defaults = {
     ami_type       = var.ami_type
     instance_types = var.worker_group_instance_type
