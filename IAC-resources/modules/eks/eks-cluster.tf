@@ -33,7 +33,7 @@ module "eks" {
   subnet_ids      = var.subnets
   vpc_id          = var.vpc_id
   iam_role_name   = "${var.namespace}-${var.environment}-role"
-  # iam_role_use_name_prefix = false
+  iam_role_use_name_prefix = false
   eks_managed_node_group_defaults = {
     ami_type       = var.ami_type
     instance_types = var.worker_group_instance_type
@@ -93,16 +93,16 @@ module "eks" {
   }
   # aws-auth configmap
   manage_aws_auth_configmap = true
-  # aws_auth_roles = [
-  #   {
-  #     rolearn  = module.eks.eks_managed_node_group
-  #     username = "system:node:{{EC2PrivateDNSName}}"
-  #     groups = [
-  #       "system:bootstrappers",
-  #       "system:nodes",
-  #     ]
-  #   }
-  # ]
+  aws_auth_roles = [
+    {
+      rolearn  = module.eks.eks_managed_node_group.iam_role_arn
+      username = "system:node:{{EC2PrivateDNSName}}"
+      groups = [
+        "system:bootstrappers",
+        "system:nodes",
+      ]
+    }
+  ]
   aws_auth_users = [
     for user in var.aws-users :
     {
