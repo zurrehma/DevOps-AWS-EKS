@@ -26,7 +26,7 @@ data "aws_eks_cluster_auth" "cluster" {
 
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "18.28.0"
+  version = "19.16.0"
 
   cluster_name    = "${var.namespace}-${var.environment}-eks-cluster"
   cluster_version = var.cluster_version
@@ -95,8 +95,8 @@ module "eks" {
   manage_aws_auth_configmap = true
   aws_auth_roles = [
     {
-      # rolearn  = module.eks.eks_managed_node_group.iam_role_arn
-      rolearn  =  "arn:aws:iam::806240344948:role/holo-test-nodes-role-20231004035659489900000002"
+      rolearn  = module.eks_managed_node_group.iam_role_arn
+      # rolearn  =  "arn:aws:iam::806240344948:role/holo-test-nodes-role-20231004035659489900000002"
       username = "system:node:{{EC2PrivateDNSName}}"
       groups = [
         "system:bootstrappers",
