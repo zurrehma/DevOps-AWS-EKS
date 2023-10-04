@@ -2,10 +2,10 @@
 # K8S variables
 #------------------------------------------------------------------------------
 
-# variable "cluster_endpoint" {
-#   description = "VPC where the cluster and workers will be deployed."
-#   type        = string
-# }
+variable "cluster_name" {
+  description = "VPC where the cluster and workers will be deployed."
+  type        = string
+}
 
 # variable "cluster_crt" {
 #   type        = string
