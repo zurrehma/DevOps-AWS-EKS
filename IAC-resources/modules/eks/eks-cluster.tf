@@ -78,13 +78,21 @@ module "eks" {
       create_iam_role          = true
       iam_role_name            = "${var.namespace}-${var.environment}-nodes-role"
       iam_role_use_name_prefix = true
-      iam_role_additional_policies = [
-        "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy",
-        "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
-        "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
-        "arn:aws:iam::aws:policy/SecretsManagerReadWrite",
-        "arn:aws:iam::806240344948:policy/kms-eks-policy"
-      ]
+      # iam_role_additional_policies = [
+      #   "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy",
+      #   "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
+      #   "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
+      #   "arn:aws:iam::aws:policy/SecretsManagerReadWrite",
+      #   "arn:aws:iam::806240344948:policy/kms-eks-policy"
+      # ]
+      iam_role_additional_policies = {
+        kms           =  aws_iam_policy.kms_policy.arn ,
+        ebs           =  "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy",
+        ssmagent      =  "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
+        cloudwatch    =   "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
+        secretmanager =  "arn:aws:iam::aws:policy/SecretsManagerReadWrite"
+    }
+  
       pre_bootstrap_user_data = <<-EOT
       #!/bin/bash
       cd /tmp

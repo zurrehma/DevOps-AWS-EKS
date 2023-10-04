@@ -1,7 +1,4 @@
-# resource "aws_kms_key" "eks_cluster_key" {
-#   description             = "KMS key For EKS Cluster"
-#   deletion_window_in_days = 7
-# }
+
 
 resource "aws_iam_policy" "kms_policy" {
   name        = "${var.namespace}-${var.environment}-kms-policy"
