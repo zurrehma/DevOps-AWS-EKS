@@ -1,4 +1,4 @@
-output "context" {
-  description = "All outputs of module"
-  value       = module.eks
-}
+# output "context" {
+#   description = "All outputs of module"
+#   value       = module.eks
+# }
