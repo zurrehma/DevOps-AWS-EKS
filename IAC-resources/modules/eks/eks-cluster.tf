@@ -80,8 +80,8 @@ module "eks" {
         "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy",
         "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
         "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
-        "arn:aws:iam::aws:policy/SecretsManagerReadWrite",
-        "arn:aws:iam::806240344948:policy/kms-eks-policy"
+        "arn:aws:iam::aws:policy/SecretsManagerReadWrite"
+        # "arn:aws:iam::806240344948:policy/kms-eks-policy"
       ]
       pre_bootstrap_user_data = <<-EOT
       #!/bin/bash
