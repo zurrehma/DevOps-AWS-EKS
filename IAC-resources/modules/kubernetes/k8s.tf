@@ -1,9 +1,9 @@
 data "aws_eks_cluster" "cluster" {
-  name = var.cluster_id
+  name = var.cluster_arn
 }
 
 data "aws_eks_cluster_auth" "cluster" {
-  name = var.cluster_id
+  name = var.cluster_arn
 }
 provider "kubernetes" {
   host                   = data.aws_eks_cluster.cluster.endpoint

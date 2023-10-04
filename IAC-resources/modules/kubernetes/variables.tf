@@ -17,7 +17,7 @@
 #   type        = string
 #   description = "The version of the EKS cluster."
 # }
-variable "cluster_id" {
+variable "cluster_arn" {
   type = string
 }
 variable "namespace" {
