@@ -19,6 +19,8 @@ requester_vpc : "vpc-96da5af2"
 namespace : demo
 # Name of the environment
 environment : uat
+#targetRevisions
+repo_branch: "dev"
 #aws-auth users 
 aws-users:
   - { name: "zahid", arn: "arn:aws:iam::806240344948:user/zahid", groups: ["system:masters"] }
