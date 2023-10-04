@@ -124,12 +124,12 @@ module "eks" {
   tags = local.tags
 }
 
-resource "aws_security_group_rule" "allow_all_ingress" {
-  description       = "Allow incoming traffic from load balancer to Jenkins Controller"
-  type              = "ingress"
-  from_port         = 0
-  to_port           = 0
-  protocol          = "-1"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = module.eks.node_security_group_id
-}
+# resource "aws_security_group_rule" "allow_all_ingress" {
+#   description       = "Allow incoming traffic from load balancer to Jenkins Controller"
+#   type              = "ingress"
+#   from_port         = 0
+#   to_port           = 0
+#   protocol          = "-1"
+#   cidr_blocks       = ["0.0.0.0/0"]
+#   security_group_id = module.eks.node_security_group_id
+# }
