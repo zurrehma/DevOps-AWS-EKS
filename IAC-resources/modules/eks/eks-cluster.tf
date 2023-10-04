@@ -134,15 +134,3 @@ module "eks" {
 #   cidr_blocks       = ["0.0.0.0/0"]
 #   security_group_id = module.eks.node_security_group_id
 # }
-#   data "aws_eks_node_group" "nodes" {
-#   for_each = module.eks.node_groups
-
-#   cluster_name = module.eks.cluster_name
-#   node_group_name = each.key
-# }
-
-# output "node_group_roles" {
-#   value = {
-#     for key, node_group in data.aws_eks_node_group.nodes : key => node_group.node_group_iam_role
-#   }
-# }
