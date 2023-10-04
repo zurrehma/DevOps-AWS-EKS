@@ -33,7 +33,6 @@ module "eks" {
   subnet_ids      = var.subnets
   vpc_id          = var.vpc_id
   iam_role_name   = "${var.namespace}-${var.environment}-role"
-  iam_role_use_name_prefix = true
   eks_managed_node_group_defaults = {
     ami_type       = var.ami_type
     instance_types = var.worker_group_instance_type
@@ -73,15 +72,12 @@ module "eks" {
       desired_size = var.autoscaling_group_desired_capacity
 
       instance_types = var.worker_group_instance_type
-      create_iam_role          = true
-      iam_role_name            = "${var.namespace}-${var.environment}-nodes-role"
-      iam_role_use_name_prefix = true
       iam_role_additional_policies = [
         "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy",
         "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
         "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
-        "arn:aws:iam::aws:policy/SecretsManagerReadWrite"
-        # "arn:aws:iam::806240344948:policy/kms-eks-policy"
+        "arn:aws:iam::aws:policy/SecretsManagerReadWrite",
+        "arn:aws:iam::806240344948:policy/kms-eks-policy"
       ]
       pre_bootstrap_user_data = <<-EOT
       #!/bin/bash
