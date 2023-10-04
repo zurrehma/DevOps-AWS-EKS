@@ -11,14 +11,16 @@ autoscaling_group_max_size : 4
 worker_group_instance_type : ["t2.medium"]
 ami_type : "AL2_x86_64"
 # This VPC will always create CIDR blocks in the 10.X.0.0/16 range. This variable is the X in this equation.
-cidr_b_block : 131
+cidr_b_block : 132
 # Requester VPC ID for VPC peering 
 requester_vpc : "vpc-96da5af2"  
 # common tags to all resources
 # A short (3-4 letters) abbreviation of the company name, to ensure globally unique IDs for things like S3 buckets
-namespace : holo
+namespace : demo
 # Name of the environment
-environment : demo
+environment : uat
+#targetRevisions
+repo_branch: "dev"
 #aws-auth users 
 aws-users:
   - { name: "zahid", arn: "arn:aws:iam::806240344948:user/zahid", groups: ["system:masters"] }

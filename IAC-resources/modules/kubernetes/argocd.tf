@@ -1,5 +1,4 @@
 module "argocd_helm" {
-  depends_on = [module.eks]
   source  = "lablabs/argocd/helm"
   version = "1.0.0"
 #   helm_chart_version = "5.35.0"
