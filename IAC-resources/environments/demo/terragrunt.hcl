@@ -2,7 +2,7 @@
 # Root terragrunt config
 #------------------------------------------------------------------------------
 locals {
-  environment = "dev"
+  environment = "test"
   aws_region = "us-east-1"
 }
 

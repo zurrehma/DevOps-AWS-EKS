@@ -18,7 +18,7 @@ requester_vpc : "vpc-96da5af2"
 # A short (3-4 letters) abbreviation of the company name, to ensure globally unique IDs for things like S3 buckets
 namespace : holo
 # Name of the environment
-environment : dev
+environment : test
 #aws-auth users 
 aws-users:
   - { name: "zahid", arn: "arn:aws:iam::806240344948:user/zahid", groups: ["system:masters"] }
