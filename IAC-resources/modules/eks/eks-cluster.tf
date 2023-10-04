@@ -15,13 +15,13 @@ locals {
   tags = merge(module.label.tags, var.tags)
 }
 
-data "aws_eks_cluster" "cluster" {
-  name = module.eks.cluster_id
-}
+# data "aws_eks_cluster" "cluster" {
+#   name = module.eks.cluster_id
+# }
 
-data "aws_eks_cluster_auth" "cluster" {
-  name = module.eks.cluster_id
-}
+# data "aws_eks_cluster_auth" "cluster" {
+#   name = module.eks.cluster_id
+# }
 
 
 module "eks" {
@@ -54,13 +54,9 @@ module "eks" {
 
   #Cluster Addon 
   cluster_addons = {
-    coredns = {
-      resolve_conflicts = "OVERWRITE"
-    }
+    coredns = {}
     kube-proxy = {}
-    vpc-cni = {
-      resolve_conflicts = "OVERWRITE"
-    }
+    vpc-cni = {}
     aws-ebs-csi-driver = {}
   }
 
@@ -99,7 +95,7 @@ module "eks" {
     }
   }
   # aws-auth configmap
-  manage_aws_auth_configmap = true
+  manage_aws_auth_configmap = false
   # aws_auth_roles = [
   #   {
   #     rolearn  = module.eks.iam_role_arn
