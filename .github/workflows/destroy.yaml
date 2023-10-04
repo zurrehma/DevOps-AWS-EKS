@@ -3,7 +3,7 @@ name: Destroy Terraform Infrastructure
 on:
   push:
     branches:
-      - main
+      - dev
 
 jobs:
   VPC-Destroy_Infra:
