@@ -44,38 +44,52 @@ provider "helm" {
   }
 }
 
-data "kubernetes_config_map" "aws_auth" {
+data "kubernetes_config_map" "existing_aws_auth" {
   metadata {
     name      = "aws-auth"
     namespace = "kube-system"
   }
 }
-locals {
-  combined_data = {
-    mapRoles = try(jsondecode(data.kubernetes_config_map.aws_auth.data["mapRoles"]), {}),
-    mapUsers = try(jsondecode(data.kubernetes_config_map.aws_auth.data["mapUsers"]), []),
-  }
-}
+
+# Merge the new IAM users with the existing ConfigMap data
 resource "kubernetes_config_map" "updated_aws_auth" {
   metadata {
     name      = "aws-auth"
     namespace = "kube-system"
   }
 
-  data = {
-    mapRoles = jsonencode(local.combined_data.mapRoles),
-    mapUsers = jsonencode(flatten([
-      local.combined_data.mapUsers,
-      [
-        for user in var.aws-users :
-        {
-          userarn  = user.arn
-          username = user.name
-          groups   = user.groups
-        }
-      ]
-    ])),
-  }
+  data = merge(
+    jsondecode(data.kubernetes_config_map.existing_aws_auth.data["mapRoles"]),
+    jsondecode(data.kubernetes_config_map.existing_aws_auth.data["mapUsers"]),
+    {
+      mapUsers = flatten([
+        [
+          for user in var.aws-users :
+          {
+            userarn  = user.arn
+            username = user.name
+            groups   = user.groups
+          }
+        ],
+      ]),
+    }
+  )
 }
+
+#   data = {
+#     mapRoles = jsonencode(local.combined_data.mapRoles),
+#     mapUsers = jsonencode(flatten([
+#       local.combined_data.mapUsers,
+#       [
+#         for user in var.aws-users :
+#         {
+#           userarn  = user.arn
+#           username = user.name
+#           groups   = user.groups
+#         }
+#       ]
+#     ])),
+#   }
+# }
 
 
