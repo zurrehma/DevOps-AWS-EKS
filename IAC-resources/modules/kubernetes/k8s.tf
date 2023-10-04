@@ -23,36 +23,4 @@ provider "helm" {
     }
   }
 }
-locals {
-  aws_auth_data = yamldecode(var.aws_auth["mapRoles"])
-}
-
-output "rolearn_values" {
-  value = [for entry in local.aws_auth_data : entry.rolearn]
-}
-# resource "kubernetes_config_map" "aws_auth" {
-#   metadata {
-#     name      = "aws-auth"
-#     namespace = "kube-system"
-#   }
-
-#   data = {
-#     mapRoles = <<-EOT
-#       - rolearn: arn:aws:iam::ACCOUNT_ID:role/NodeInstanceRole
-#         username: system:node:{{EC2PrivateDNSName}}
-#         groups:
-#           - system:bootstrappers
-#           - system:nodes
-#       # Add more role mappings as needed
-#     EOT
-
-#     mapUsers = <<-EOT
-#       - userarn: arn:aws:iam::ACCOUNT_ID:user/USERNAME
-#         username: USERNAME
-#         groups:
-#           - system:masters
-#       # Add more user mappings as needed
-#     EOT
-#   }
-# }
 
