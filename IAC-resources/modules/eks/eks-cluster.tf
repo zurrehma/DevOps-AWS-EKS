@@ -95,7 +95,7 @@ module "eks" {
   manage_aws_auth_configmap = true
   aws_auth_roles = [
     {
-      rolearn  = module.eks_managed_node_group.iam_role_arn
+      rolearn  = module.eks.iam_role_arn
       # rolearn  =  "arn:aws:iam::806240344948:role/holo-test-nodes-role-20231004035659489900000002"
       username = "system:node:{{EC2PrivateDNSName}}"
       groups = [
