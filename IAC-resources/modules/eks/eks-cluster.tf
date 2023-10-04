@@ -100,14 +100,21 @@ module "eks" {
   #     ]
   #   }
   # ]
-  aws_auth_users = [
-    for user in var.aws-users :
+    aws_auth_users = [
     {
-      userarn  = user.arn
-      username = user.name
-      groups   = user.groups
+      userarn  = "arn:aws:iam::806240344948:user/zahid"
+      username = "zahid"
+      groups   = ["system:masters"]
     }
   ]
+  # aws_auth_users = [
+  #   for user in var.aws-users :
+  #   {
+  #     userarn  = user.arn
+  #     username = user.name
+  #     groups   = user.groups
+  #   }
+  # ]
   tags = local.tags
 }
 
