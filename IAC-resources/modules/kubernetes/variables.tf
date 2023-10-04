@@ -23,3 +23,10 @@ variable "environment" {
   type    = string
   default = ""
 }
+variable "aws-users" {
+  type = list(object({
+    arn    = string
+    name   = string
+    groups = list(string)
+  }))
+}
