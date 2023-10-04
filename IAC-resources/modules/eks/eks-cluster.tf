@@ -93,6 +93,18 @@ module "eks" {
       EOT
     }
   }
+  data "aws_eks_node_group" "nodes" {
+  for_each = module.eks.node_groups
+
+  cluster_name = module.eks.cluster_name
+  node_group_name = each.key
+}
+
+output "node_group_roles" {
+  value = {
+    for key, node_group in data.aws_eks_node_group.nodes : key => node_group.node_group_iam_role
+  }
+}
   # aws-auth configmap
   # create_aws_auth_configmap = true
   # manage_aws_auth_configmap = true
