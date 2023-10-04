@@ -12,9 +12,9 @@ dependency "eks"{
 
 inputs = {
   cluster_arn = dependency.eks.outputs.context.cluster_arn
+  cluster_endpoint = dependency.eks.outputs.context.cluster_endpoint
+  cluster_crt = dependency.eks.outputs.context.cluster_certificate_authority_data
   cluster_name = dependency.eks.outputs.context.cluster_name
-  # cluster_crt = dependency.eks.outputs.cluster_certificate_authority_data
-  # cluster_token = dependency.eks.outputs.aws_eks_cluster_auth.cluster.token
 }
 # inputs = {
 #   cluster_id = dependency.eks.outputs.context.cluster_id
