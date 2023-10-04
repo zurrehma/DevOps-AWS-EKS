@@ -15,14 +15,17 @@ locals {
   tags = merge(module.label.tags, var.tags)
 }
 
-# data "aws_eks_cluster" "cluster" {
-#   name = module.eks.cluster_id
-# }
+provider "kubernetes" {
+  host                   = module.eks.cluster_endpoint
+  cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
 
-# data "aws_eks_cluster_auth" "cluster" {
-#   name = module.eks.cluster_id
-# }
-
+  exec {
+    api_version = "client.authentication.k8s.io/v1beta1"
+    command     = "aws"
+    # This requires the awscli to be installed locally where Terraform is executed
+    args = ["eks", "get-token", "--cluster-name", module.eks.cluster_name]
+  }
+}
 
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
@@ -95,7 +98,7 @@ module "eks" {
   }
   # aws-auth configmap
   # create_aws_auth_configmap = true
-  # manage_aws_auth_configmap = true
+   manage_aws_auth_configmap = true
   # aws_auth_roles = [
   #   {
   #     rolearn  = module.eks.iam_role_arn
@@ -114,14 +117,14 @@ module "eks" {
   #     groups   = ["system:masters"]
   #   }
   # ]
-  # aws_auth_users = [
-  #   for user in var.aws-users :
-  #   {
-  #     userarn  = user.arn
-  #     username = user.name
-  #     groups   = user.groups
-  #   }
-  # ]
+  aws_auth_users = [
+    for user in var.aws-users :
+    {
+      userarn  = user.arn
+      username = user.name
+      groups   = user.groups
+    }
+  ]
   tags = local.tags
 }
 
