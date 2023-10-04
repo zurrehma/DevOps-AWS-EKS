@@ -54,9 +54,15 @@ module "eks" {
 
   #Cluster Addon 
   cluster_addons = {
-    coredns = {}
-    kube-proxy = {}
-    vpc-cni = {}
+    coredns = {
+      most_recent = true
+    }
+    kube-proxy = {
+      most_recent = true
+    }
+    vpc-cni = {
+      most_recent = true
+    }
     aws-ebs-csi-driver = {}
   }
 
@@ -88,7 +94,7 @@ module "eks" {
     }
   }
   # aws-auth configmap
-  manage_aws_auth_configmap = true
+  manage_aws_auth_configmap = false
   # aws_auth_roles = [
   #   {
   #     rolearn  = module.eks.iam_role_arn
@@ -100,13 +106,13 @@ module "eks" {
   #     ]
   #   }
   # ]
-    aws_auth_users = [
-    {
-      userarn  = "arn:aws:iam::806240344948:user/zahid"
-      username = "zahid"
-      groups   = ["system:masters"]
-    }
-  ]
+  #   aws_auth_users = [
+  #   {
+  #     userarn  = "arn:aws:iam::806240344948:user/zahid"
+  #     username = "zahid"
+  #     groups   = ["system:masters"]
+  #   }
+  # ]
   # aws_auth_users = [
   #   for user in var.aws-users :
   #   {
