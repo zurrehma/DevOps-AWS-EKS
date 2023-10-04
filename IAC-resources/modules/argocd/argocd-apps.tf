@@ -126,7 +126,7 @@ resource "kubernetes_manifest" "application_argocd_ava_server" {
     "spec" = {
       "destination" = {
         "name" = ""
-        "namespace" = "ava-sever"
+        "namespace" = "ava-server"
         "server" = "https://kubernetes.default.svc"
       }
       "project" = "default"
