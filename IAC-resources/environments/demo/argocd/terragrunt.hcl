@@ -8,6 +8,7 @@ include {
 
 dependency "eks"{
   config_path = "../k8s"
+  skip_outputs   = true
 }
 
 inputs = {
