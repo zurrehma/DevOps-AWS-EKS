@@ -50,8 +50,10 @@ module "eks" {
   cluster_enabled_log_types = ["audit", "api", "authenticator", "controllerManager", "scheduler"]
 
   #Enable KMS Key Encrption 
-  create_kms_key            = false
-  cluster_encryption_config = {}
+  cluster_encryption_config = [{
+    provider_key_arn = aws_kms_key.eks_cluster_key.arn
+    resources = ["secrets"]
+  }]
 
   # attach_cluster_encryption_policy = true
 
@@ -97,26 +99,7 @@ module "eks" {
     }
   }
   # aws-auth configmap
-  # create_aws_auth_configmap = true
-   manage_aws_auth_configmap = true
-  # aws_auth_roles = [
-  #   {
-  #     rolearn  = module.eks.iam_role_arn
-  #     # rolearn  =  "arn:aws:iam::806240344948:role/holo-test-nodes-role-20231004035659489900000002"
-  #     username = "system:node:{{EC2PrivateDNSName}}"
-  #     groups = [
-  #       "system:bootstrappers",
-  #       "system:nodes",
-  #     ]
-  #   }
-  # ]
-  #   aws_auth_users = [
-  #   {
-  #     userarn  = "arn:aws:iam::806240344948:user/zahid"
-  #     username = "zahid"
-  #     groups   = ["system:masters"]
-  #   }
-  # ]
+  manage_aws_auth_configmap = true
   aws_auth_users = [
     for user in var.aws-users :
     {
