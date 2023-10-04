@@ -24,5 +24,5 @@ variable "environment" {
   default = ""
 }
 variable "repo_branch" {
-  
+  type = string
 }
