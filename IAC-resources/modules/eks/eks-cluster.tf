@@ -47,13 +47,10 @@ module "eks" {
   cluster_enabled_log_types = ["audit", "api", "authenticator", "controllerManager", "scheduler"]
 
   #Enable KMS Key Encrption 
-  cluster_encryption_config = [{
-    provider_key_arn = aws_kms_key.eks_cluster_key.arn
-    resources = ["secrets"]
-  }]
-  kms_key_deletion_window_in_days = 7
+  create_kms_key            = false
+  cluster_encryption_config = {}
 
-  attach_cluster_encryption_policy = true
+  # attach_cluster_encryption_policy = true
 
   #Cluster Addon 
   cluster_addons = {
