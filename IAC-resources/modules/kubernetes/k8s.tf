@@ -44,37 +44,37 @@ provider "helm" {
   }
 }
 
-data "kubernetes_config_map" "existing_aws_auth" {
-  metadata {
-    name      = "aws-auth"
-    namespace = "kube-system"
-  }
-}
+# data "kubernetes_config_map" "existing_aws_auth" {
+#   metadata {
+#     name      = "aws-auth"
+#     namespace = "kube-system"
+#   }
+# }
 
-# Merge the new IAM users with the existing ConfigMap data
-resource "kubernetes_config_map" "updated_aws_auth" {
-  metadata {
-    name      = "aws-auth"
-    namespace = "kube-system"
-  }
+# # Merge the new IAM users with the existing ConfigMap data
+# resource "kubernetes_config_map" "updated_aws_auth" {
+#   metadata {
+#     name      = "aws-auth"
+#     namespace = "kube-system"
+#   }
 
-  data = merge(
-    jsondecode(data.kubernetes_config_map.existing_aws_auth.data["mapRoles"]),
-    jsondecode(data.kubernetes_config_map.existing_aws_auth.data["mapUsers"]),
-    {
-      mapUsers = flatten([
-        [
-          for user in var.aws-users :
-          {
-            userarn  = user.arn
-            username = user.name
-            groups   = user.groups
-          }
-        ],
-      ]),
-    }
-  )
-}
+#   data = merge(
+#     jsondecode(data.kubernetes_config_map.existing_aws_auth.data["mapRoles"]),
+#     jsondecode(data.kubernetes_config_map.existing_aws_auth.data["mapUsers"]),
+#     {
+#       mapUsers = flatten([
+#         [
+#           for user in var.aws-users :
+#           {
+#             userarn  = user.arn
+#             username = user.name
+#             groups   = user.groups
+#           }
+#         ],
+#       ]),
+#     }
+#   )
+# }
 
 #   data = {
 #     mapRoles = jsonencode(local.combined_data.mapRoles),
