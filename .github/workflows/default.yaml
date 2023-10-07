@@ -20,19 +20,20 @@ jobs:
           echo "Commit Message: $commit_message"
           if [[ "$commit_message" == *"destroy infra"* ]]; then
             echo "::set-output name=trigger_workflow::true"
+            gh workflow run terraform-destroy.yaml
           else
             echo "::set-output name=trigger_workflow::false"
           fi
 
-  trigger_workflow:
-    needs: check_commits
-    runs-on: ubuntu-latest
+  # trigger_workflow:
+  #   needs: check_commits
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: Trigger Destroy Workflow
-        if: steps.check_commits.outputs.trigger_workflow == 'true'
-        # run: gh workflow run terraform-destroy.yaml
-        run: echo steps.check_commits.outputs.trigger_workflow
-      # - name: Trigger Deploy Workflow
-      #   if: steps.check_commits.outputs.trigger_workflow == 'false'
-      #   # run: gh workflow run terraform.yaml
+  #   steps:
+  #     - name: Trigger Destroy Workflow
+  #       if: steps.check_commits.outputs.trigger_workflow == 'true'
+  #       # run: gh workflow run terraform-destroy.yaml
+  #       run: echo steps.check_commits.outputs.trigger_workflow
+  #     # - name: Trigger Deploy Workflow
+  #     #   if: steps.check_commits.outputs.trigger_workflow == 'false'
+  #     #   # run: gh workflow run terraform.yaml
