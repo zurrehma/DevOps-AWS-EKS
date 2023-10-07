@@ -29,23 +29,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Trigger Workflow
+      - name: Trigger Destroy Workflow
         if: steps.check_commits.outputs.trigger_workflow == 'true'
         run: gh workflow run terraform-destroy.yaml
-
-
-  # check_commit_message:
-  #   runs-on: ubuntu-latest
-    
-  #   steps:
-  #     - name: Check Commit Message
-  #       id: commit_check
-  #       run: |
-  #         commit_message=$(git log --format=%B -n 1 ${{ github.sha }})
-  #         echo "Commit Message: $commit_message"
-  #         if [[ "$commit_message" == *"destroy infra"* ]]; then
-  #           echo "Running Terraform Destroy Workflow"
-  #           gh workflow run terraform-destroy.yaml
-  #         else
-  #           gh workflow run terraform.yaml 
-  #         fi
+      - name: Trigger Deploy Workflow
+        if: steps.check_commits.outputs.trigger_workflow == 'false'
+        run: gh workflow run terraform.yaml
