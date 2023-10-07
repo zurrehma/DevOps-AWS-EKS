@@ -15,24 +15,28 @@ locals {
   tags = merge(module.label.tags, var.tags)
 }
 
-data "aws_eks_cluster" "cluster" {
-  name = module.eks.cluster_id
-}
+provider "kubernetes" {
+  host                   = module.eks.cluster_endpoint
+  cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
 
-data "aws_eks_cluster_auth" "cluster" {
-  name = module.eks.cluster_id
+  exec {
+    api_version = "client.authentication.k8s.io/v1beta1"
+    command     = "aws"
+    # This requires the awscli to be installed locally where Terraform is executed
+    args = ["eks", "get-token", "--cluster-name", module.eks.cluster_name]
+  }
 }
-
 
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "18.28.0"
+  version = "19.16.0"
 
   cluster_name    = "${var.namespace}-${var.environment}-eks-cluster"
   cluster_version = var.cluster_version
   subnet_ids      = var.subnets
   vpc_id          = var.vpc_id
-  iam_role_name   = "${var.cluster_name}-role"
+  iam_role_name   = "${var.namespace}-${var.environment}-role"
+  iam_role_use_name_prefix = true
   eks_managed_node_group_defaults = {
     ami_type       = var.ami_type
     instance_types = var.worker_group_instance_type
@@ -46,20 +50,21 @@ module "eks" {
   cluster_enabled_log_types = ["audit", "api", "authenticator", "controllerManager", "scheduler"]
 
   #Enable KMS Key Encrption 
-  cluster_encryption_config = [{
-    provider_key_arn = aws_kms_key.eks_cluster_key.arn
-    resources        = ["secrets"]
-  }]
-  attach_cluster_encryption_policy = true
+  create_kms_key            = false
+  cluster_encryption_config = {}
+
+  # attach_cluster_encryption_policy = true
 
   #Cluster Addon 
   cluster_addons = {
     coredns = {
-      resolve_conflicts = "OVERWRITE"
+      most_recent = true
     }
-    kube-proxy = {}
+    kube-proxy = {
+      most_recent = true
+    }
     vpc-cni = {
-      resolve_conflicts = "OVERWRITE"
+      most_recent = true
     }
     aws-ebs-csi-driver = {}
   }
@@ -72,13 +77,17 @@ module "eks" {
       desired_size = var.autoscaling_group_desired_capacity
 
       instance_types = var.worker_group_instance_type
-      iam_role_additional_policies = [
-        "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy",
-        "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
-        "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
-        "arn:aws:iam::aws:policy/SecretsManagerReadWrite",
-        aws_iam_policy.kms_policy.arn
-      ]
+      create_iam_role          = true
+      iam_role_name            = "${var.namespace}-${var.environment}-nodes-role"
+      iam_role_use_name_prefix = true
+      iam_role_additional_policies = {
+        kms           =  aws_iam_policy.kms_policy.arn ,
+        ebs           =  "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy",
+        ssmagent      =  "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
+        cloudwatch    =   "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
+        secretmanager =  "arn:aws:iam::aws:policy/SecretsManagerReadWrite"
+    }
+  
       pre_bootstrap_user_data = <<-EOT
       #!/bin/bash
       cd /tmp
@@ -89,7 +98,6 @@ module "eks" {
   }
   # aws-auth configmap
   manage_aws_auth_configmap = true
-
   aws_auth_users = [
     for user in var.aws-users :
     {
@@ -101,23 +109,12 @@ module "eks" {
   tags = local.tags
 }
 
-resource "aws_security_group_rule" "allow_all_ingress" {
-  description       = "Allow incoming traffic from load balancer to Jenkins Controller"
-  type              = "ingress"
-  from_port         = 0
-  to_port           = 0
-  protocol          = "-1"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = module.eks.node_security_group_id
-}
-
-resource "aws_security_group_rule" "allow_all_egress" {
-  description       = "Allow all outbound traffic"
-  type              = "egress"
-  from_port         = 0
-  to_port           = 0
-  protocol          = "-1"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = module.eks.node_security_group_id
-}
-
+# resource "aws_security_group_rule" "allow_all_ingress" {
+#   description       = "Allow incoming traffic from load balancer to Jenkins Controller"
+#   type              = "ingress"
+#   from_port         = 0
+#   to_port           = 0
+#   protocol          = "-1"
+#   cidr_blocks       = ["0.0.0.0/0"]
+#   security_group_id = module.eks.node_security_group_id
+# }
