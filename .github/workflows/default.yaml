@@ -22,6 +22,6 @@ jobs:
           if [[ "$commit_message" == *"destroy infra"* ]]; then
             gh workflow run terraform-destroy.yaml
           else
-            run: gh workflow run terraform.yaml
+            gh workflow run terraform.yaml
           fi
 
