@@ -1,10 +1,6 @@
 name: Terraform Infra Workflow
 
-on:
-  workflow_run:
-    workflows: ["Terraform Workflow"]
-    types:
-      - completed
+on: workflow_call
 permissions:
   id-token: write   
   contents: read   

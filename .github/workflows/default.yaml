@@ -31,7 +31,8 @@ jobs:
     steps:
       - name: Trigger Destroy Workflow
         if: steps.check_commits.outputs.trigger_workflow == 'true'
-        run: gh workflow run terraform-destroy.yaml
-      - name: Trigger Deploy Workflow
-        if: steps.check_commits.outputs.trigger_workflow == 'false'
-        run: gh workflow run terraform.yaml
+        # run: gh workflow run terraform-destroy.yaml
+        run: echo steps.check_commits.outputs.trigger_workflow
+      # - name: Trigger Deploy Workflow
+      #   if: steps.check_commits.outputs.trigger_workflow == 'false'
+      #   # run: gh workflow run terraform.yaml
