@@ -11,6 +11,7 @@ env:
 jobs:
   Deploy-Argocd-Resources:
     runs-on: ubuntu-latest
+    continue-on-error: true
     defaults:
       run:
         working-directory: IAC-resources/environments/demo/argocd
@@ -43,6 +44,7 @@ jobs:
   
   Configure-K8s-Resources:
     runs-on: ubuntu-latest
+    continue-on-error: true
     needs: [ Deploy-Argocd-Resources ]
     defaults:
       run:
@@ -76,6 +78,7 @@ jobs:
 
   EKS-Infra-Terraform:
     runs-on: ubuntu-latest
+    continue-on-error: true
     needs: [ Configure-K8s-Resources, Deploy-Argocd-Resources ]
     defaults:
       run:
