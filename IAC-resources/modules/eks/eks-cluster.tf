@@ -81,11 +81,18 @@ module "eks" {
       iam_role_name            = "${var.namespace}-${var.environment}-nodes-role"
       iam_role_use_name_prefix = true
       iam_role_additional_policies = {
-        kms           =  aws_iam_policy.kms_policy.arn ,
-        ebs           =  "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy",
-        ssmagent      =  "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
-        cloudwatch    =   "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
-        secretmanager =  "arn:aws:iam::aws:policy/SecretsManagerReadWrite"
+        kms            =  aws_iam_policy.kms_policy.arn ,
+        ebs            =  "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy",
+        ssmagent       =  "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
+        cloudwatch     =  "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
+        secretmanager  =  "arn:aws:iam::aws:policy/SecretsManagerReadWrite",
+        ssmec2         =  "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM",
+        s3             =  "arn:aws:iam::aws:policy/AmazonS3FullAccess",
+        rds            =  "arn:aws:iam::aws:policy/AmazonRDSFullAccess",
+        iam            =  "arn:aws:iam::aws:policy/IAMReadOnlyAccess",
+        cloudwatchlogs =  "arn:aws:iam::aws:policy/CloudWatchLogsReadOnlyAccess",
+        textract       =  "arn:aws:iam::aws:policy/AmazonTextractFullAccess",
+        ses            =  "arn:aws:iam::aws:policy/AmazonSESFullAccess"
     }
   
       pre_bootstrap_user_data = <<-EOT
