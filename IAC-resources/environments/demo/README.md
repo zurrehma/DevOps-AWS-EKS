@@ -1,4 +1,4 @@
-# EKS
+# Deploy EKS Infra
 
 ### Deploy New Environment (Using Terraform)
 ##### Step 1:
