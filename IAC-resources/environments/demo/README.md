@@ -61,3 +61,18 @@ and changes are:
 ``` yaml 
 proxy-real-ip-cidr: 10.132.0.0/16
 ```
+
+### Destroy Environment (Using Terraform)
+- if you want to destroy specfic branch Environment then Create a new Pull request for that branch and add commit message "destroy infra".
+For Commit Message Commands are as follow:
+
+``` yaml
+git add .
+git commit -m "destroy infra"
+git push 
+```
+
+- Merge Pull Request into the branch to destroy Infra.
+
+##### Note: 
+- This process automatically destroy all infra that created against this branch.
