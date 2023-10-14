@@ -1,6 +1,8 @@
 # Deploy EKS Infra
 
 ### Deploy New Environment (Using Terraform)
+<hr>
+
 ##### Step 1:
 Create a new Branch from master 
 
@@ -63,6 +65,8 @@ proxy-real-ip-cidr: 10.132.0.0/16
 ```
 
 ### Destroy Environment (Using Terraform)
+<hr>
+
 - if you want to destroy specfic branch Environment then Create a new Pull request for that branch and add commit message "destroy infra".
 For Commit Message Commands are as follow:
 
