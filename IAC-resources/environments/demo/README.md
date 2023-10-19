@@ -80,3 +80,13 @@ git push
 
 ##### Note: 
 - This process automatically destroy all infra that created against this branch.
+
+### Kuberetes
+
+- To authenticate with cluster:
+```aws eks update-kubeconfig --region us-east-1 --name <cluster-name>```
+
+- For Kubectl Installation:
+https://kubernetes.io/docs/tasks/tools/
+- For Kubectl Commands:
+https://www.bluematador.com/learn/kubectl-cheatsheet
